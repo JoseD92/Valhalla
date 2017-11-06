@@ -2,9 +2,32 @@
 \usepackage{mystyle}
 
 \begin{document}
+\lstset{language=Haskell}
 
-\include{./tex/seccion_2}
+\section{Marco Teórico}
+\input{./tex/ProgFuncional}
+\input{./tex/FunReactiva}
+\input{./tex/MotorVideo}
 
+\pagebreak
+\section{Implementación}
+\input{./tex/Implementacion}
+
+\pagebreak
+\section{Discuciones y recomendaciones}
+\input{./tex/Recomendaciones}
+
+\pagebreak
+\section{Conclusiones}
+\input{./tex/Conclusiones}
+
+%\pagebreak
+%\section{Código}
+%\input{./tex/Code}
+
+\pagebreak
+\input{./tex/images}
+
+\bibliographystyle{IEEEtran}
 \bibliography{referencias}{}
-\bibliographystyle{plain}
 \end{document}

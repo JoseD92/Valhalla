@@ -1,0 +1,66 @@
+\documentclass{standalone}
+\begin{document}
+
+\subsection{Programación Funcional Reactiva}
+
+\paragraph{}
+La programación reactiva funcional (FRP, por sus siglas en ingles) es un enfoque elegante para especificar de forma declarativa los sistemas reactivos, que son sistemas orientados en la propagación de cambios de multiples entidades.
+
+\paragraph{}
+FRP integra la idea de flujo de tiempo y composición de eventos en la programación puramente funcional. Al manejar el flujo de tiempo de manera uniforme y generalizada, una aplicación obtiene claridad y fiabilidad. Así como la evaluación perezosa puede eliminar la necesidad de estructuras de control complejas, una noción uniforme de flujo de tiempo soporta un estilo de programación más declarativo que oculta un complejo mecanismo subyacente. Esto proporciona una manera elegante de expresar la computación en dominios como animaciones interactivas \cite{eh97:fran}, robótica \cite{Pembeci:2002:FRR:571157.571174}, visión por computadora, interfaces de usuario \cite{czaplicki2012elm} y simulación.
+
+\paragraph{Implementaciones de FRP}
+Las implementaciones más comunes de FRP para haskell  hacen uso de la notación de flechas, que son una nueva manera abstracta de visualizar los cómputos, creada por John Hughes \cite{hughes2000generalising}. Las flechas, al igual que los monads, proveen una estructura común para la implementación de librerías siendo más generales que los monads. John Hughes demostró que existen tipos de datos que no se adaptan bien a la estructura de monads causando así fugas de memoria indeseadas, que con flechas pueden ser resueltas en lenguajes funciones como haskell \cite{hughes2000generalising}. Adicionalmente las librerías de FRP en haskell usan una extensión del lenguaje propuesta por Ross  Paterson \cite{paterson2001new} que hace el uso de flechas mucho más fácil y conveniente que la versión original creada por Hughes. Para mas detalles de la evolución de FRP leer \say{Elm: Concurrent FRP for Functional GUIs} \cite{czaplicki2012elm} capitulo 2.1.
+
+\subsubsection{Yampa}
+
+\paragraph{}
+Yampa es un lenguaje embebido para la programación de sistemas híbridos (tiempo discreto y continuo) utilizando los conceptos de Programación Reactiva Funcional (FRP). Yampa está estructurado con flechas, que reducen en gran medida la posibilidad de introducir fugas de espacio y tiempo en sistemas reactivos que varían en el tiempo \cite{wiki:Yampa}. Yampa es un sistema diseñado en base a una noción de muestreo y cambios dirigidos por eventos, es decir, la generación de un evento (como el presionar una tecla) causa la evaluación de valores y cambios en el estado actual del programa.
+
+\paragraph{Señales.}
+En FRP una señal puede representar cualquier valor mutable. Estas pueden ser transformadas y combinadas, que a diferencia de otras soluciones mas tradiciones, permite abstraer varios detalles menores, permitiendo al programador lograr un mismo resultado usando menos código. En Yampa una señal es una función que que va de tiempo a valor, dicho en otras palabras, es una función que dado un tiempo determinado regresa el valor adecuado para el objeto mutable en el momento indicado. Un ejemplo es la posición del ratón.
+
+\begin{equation}
+Signal \ \alpha \approx Time \rightarrow \alpha
+\end{equation}
+
+\paragraph{Funciones de señal.}
+Es una función que recibe una señal y produce otra señal. Estas funciones permiten alterar o generar nuevas señales dependiendo del estado actual de la señal original, por ejemplo, puede ser deseable generar una señal nueva cuando el ratón pasa por sobre algún elemento gráfico en especifico.
+
+\begin{equation}
+SF \ \alpha \ \beta \approx Signal \ \alpha \rightarrow Signal \ \beta
+\end{equation}
+
+\paragraph{Combinadores de funciones de señal.}
+Similar a la composición de funciones, las SF pueden ser compuestas para permitir un mejor filtrado de las señales. En Yampa los combinadores mas comunes son:
+
+\begin{itemize}
+\item arr: crea un SF a partir de una función (Figura 1).
+\item first: aplica una SF solo al primer elemento de la entrada y deja el resto sin cambios (Figura 2).
+\item composición: compone dos SF, la señal resultada de la primera SF es dada como entrada a la segunda SF (Figura 3).
+\item loop: crea una SF que usa su propia salida para calcular su salida, que es posible gracias a la evaluación perezosa de los lenguajes funciones (Figura 4).
+\end{itemize}
+
+\paragraph{Suiches}
+En una red de señales, es necesario poder cambiar su estructura conforme pasa el tiempo o se lleva a cabo ciertos eventos, los suiches permiten reflejar estos cambios aislando o activando ciertos elementos de la red. Pueden verse como una maquina de estados, que cambia de estado al recibir un evento.
+
+\paragraph{}
+Para mejor visualizar el funcionamiento de Yampa, el siguiente ejemplo:
+
+\begin{lstlisting}[frame=single]
+moveSF :: Double -> Double -> Double -> SF () Double
+moveSF limMax limMin initPos =
+  aux1 (> limMax) (< limMin) (5,initPos)
+  where
+    aux1 f1 f2 (speed,initPos) =
+      switch (aux2 f1 speed initPos) (aux1 f2 f1)
+    aux2 f speed initPos = proc _ -> do
+      xnew <- (+initPos) ^<< integral -< speed
+      event <- edge -< f xnew
+      returnA -< ((xnew,dir),tag event (-speed,xnew))
+\end{lstlisting}
+
+\paragraph{}
+El ejemplo muestra una SF que no recibe entrada (en Yampa el tiempo transcurrido es una entrada implícita), que retorna la ubicación de un objeto que se mueve de un lado al otro entre dos limites dados (limMax y limMin) a partir de una posición (initPos) con velocidad 5. Esta SF es básicamente una máquina de estado que guarda la velocidad a la que se mueve el objeto y el límite contra el cual comparar, así, cuando el objeto llega a uno de los limites se dispara un evento que causa un cambio en el estado, se multiplica la velocidad por -1 y se cambia el limite contra el cual comparar, y mientras el limite no sea alcanzado, simplemente se cambia la ubicación en función de la integral de la velocidad.
+
+\end{document}

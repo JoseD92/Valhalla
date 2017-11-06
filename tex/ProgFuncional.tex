@@ -1,0 +1,45 @@
+\documentclass{standalone}
+\begin{document}
+
+\subsection{Programación Funcional}
+
+\paragraph{}
+Es un paradigma de programación, un estilo de construcción de la estructura y elementos de programas informáticos, que trata el cálculo como la evaluación de funciones matemáticas y evita el cambio de estado y datos mutables. Es un paradigma de programación declarativa, lo que significa que la programación se hace con expresiones o declaraciones. En código funcional, el valor de salida de una función sólo depende de los argumentos que se pasan a la función, por lo que llamar a una función f dos veces con el mismo valor para un argumento x producirá el mismo resultado f (x) cada vez. La eliminación de efectos secundarios, es decir, cambios en el estado que no dependen de las entradas de función, puede hacer mucho más fácil comprender y predecir el comportamiento de un programa, que es una de las motivaciones clave para el desarrollo de la programación funcional.
+
+\paragraph{}
+La programación funcional tiene su origen en el cálculo lambda, un sistema formal desarrollado en la década de 1930 para investigar la computabilidad, el problema de Entscheidung, la definición de funciones, la aplicación de funciones y la recursión. Muchos lenguajes de programación funcional pueden ser vistos como elaboraciones sobre el cálculo lambda.
+
+%chequear nombre: funciones de primer orden
+\subsubsection{Funciones de primera clase y de orden superior}
+\paragraph{}
+Funciones de orden superior son funciones que pueden tomar otras funciones como argumentos o devolverlos como resultados. Las funciones de orden superior están estrechamente relacionadas con las funciones de primera clase, en las cuales las funciones de orden superior y las funciones de primera clase pueden recibir como argumentos y generar como resultados otras funciones. Las funciones de orden superior describen un concepto matemático de funciones que operan sobre otras funciones, mientras que las funciones de primera clase son un término informático que describe las entidades del lenguaje de programación que no tienen ninguna restricción de su utilización.
+
+\paragraph{}
+Las funciones de orden superior permiten la aplicación parcial, una técnica en la que se aplica una función a sus argumentos uno a la vez, con cada aplicación devolver una nueva función que acepta el siguiente argumento. Esto le permite a uno expresar, por ejemplo, la función sucesor como el operador de suma aplicada parcialmente al número natural uno.
+
+\subsubsection{Funciones puras}
+\paragraph{}
+También denominadas expresiones, son funciones que no tienen ningún efecto secundario, como alterar memoria o realizar operaciones de entrada o salida (E/S). Esto significa que las funciones puras tienen varias propiedades útiles, muchas de las cuales pueden ser utilizadas para optimizar el código:
+
+\begin{itemize}
+\item Si no se utiliza el resultado de una expresión pura, se puede eliminar sin afectar a otras expresiones.
+\item El resultado es constante con respecto a la lista de parámetros, es decir, si la función pura se llama de nuevo con los mismos parámetros, el mismo resultado será devuelto, esto puede habilitar las optimizaciones de almacenamiento en caché.
+\item Si no hay una dependencia de datos entre dos expresiones puras, entonces su orden puede ser invertido, o pueden llevarse a cabo en paralelo.
+\end{itemize}
+
+%evaluacion no estricta
+\subsubsection{Evaluación perezosa}
+\paragraph{}
+Los argumentos a una función no se evalúan a menos que se utilicen realmente en la evaluación del cuerpo de la función. Ello ofrece un gran potencial para optimizaciones de parte de los compiladores y la posibilidad de evitar realizar ciertas operaciones.
+
+\paragraph{}
+Los lenguajes de evaluación tardía permiten la definición de estructuras de datos infinitas, algo que es mucho más complicado en un lenguaje de evaluación estricta. Por ejemplo, considera una lista con los números de Fibonacci. Está claro que no podemos realizar cálculos sobre una lista infinita en un tiempo razonable, o guardarla en memoria. Como el lenguaje es de evaluación tardía, solo las partes necesarias de la lista que son usadas realmente por el programa serán evaluadas. Esto permite abstraer muchos problemas y verlos desde una persepectiva de más alto nivel.
+
+\paragraph{}
+Adicionalmente, en combinación con funciones de orden superior, la evaluación perezosa permite un mayor nivel de modularización del código de los programas, haciéndolos más cortos y fáciles de escribir mejorando así la productividad \cite{hughes1989functional}.
+
+\subsubsection{Sistemas de tipos}
+\paragraph{}
+El uso de tipos de datos algebraicos y la coincidencia de patrones hace que la manipulación de estructuras de datos complejas convenientes y expresivos, la presencia de comprobaciones estrictas de tipos en tiempo de compilación hace que los programas sean más fiables, mientras que la inferencia de tipos libera al programador de la necesidad de declarar manualmente los tipos para el compilador al momento de declarar funciones u otras expresiones.
+
+\end{document}

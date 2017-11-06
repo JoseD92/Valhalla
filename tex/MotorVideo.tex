@@ -1,0 +1,21 @@
+\documentclass{standalone}
+\begin{document}
+
+\subsection{Motores de videojuego}
+
+\paragraph{}
+Un motor de videojuego es un término que hace referencia a una serie de rutinas de programación, frameworks u otras herramientas, que permiten el diseño, la creación y la representación de un videojuego. La funcionalidad básica de un motor es proveer al videojuego de un motor de renderizado para los gráficos 2D y 3D, motor físico o detector de colisiones, sonidos, scripting, animación, inteligencia artificial, redes, streaming, administración de memoria y un escenario gráfico. El proceso de desarrollo de juegos es a menudo economizado, en gran parte, mediante la reutilización/adaptación del mismo motor de juego para crear diferentes juegos, o para facilitar la portabilidad de juegos a múltiples plataformas \cite{JasonGregory-GameEngineArchitecture}.
+
+\paragraph{}
+Algunos de los motores de juego mas usados en la actualidad, como lo son Source, Unity, Unreal Engine, GameMaker: Studio, CryEngine, entre otros, son conocidos por ser imperativos, siendo sus funciones mas importantes implementadas en lenguaje c++, lenguaje moderno conocido por ayudar en la ejecución de grandes proyectos.
+
+\paragraph{}
+El factor más importante que diferencia un motor de juego de un juego está en que el motor está diseñado con una arquitectura enfocada en los datos. Mientras que un juego contiene una lógica o reglas del juego hard-coded, o emplea un código de caso especial para representar tipos específicos de objetos del juego, se vuelve difícil o imposible reutilizar ese software para hacer un juego diferente. El motor de juego permite el reutilizar de gran parte del código para varios juegos diferentes en una forma modular, donde un programador solo se encarga de programar la lógica de su juego.
+
+\paragraph{}
+Todo juego es por naturaleza una aplicación multimedia, y un motor de juego es responsable de recibir y mantener todos estos recursos (o assets en inglés) que vienen en la forma de mayas 3D, bitmaps de texturas, animaciones, audio y cualquier otro elemento que el juego requiera. Todo motor de juego moderno debe de ser capaz de leer recursos multimedia de los diferentes formatos de las aplicaciones usadas por los artistas y dale esos recursos a los subsistemas adecuados para su reproducción.
+
+\paragraph{}
+Por último, y no menos importante, el motor de juego debe de hacerse cargo de administrar los diferentes recursos de la máquina de la manera más eficiente posible. Debe mantener recursos y objetos en RAM, administrar el acceso a disco duro, manejar el ciclo de rendering en el GPU y administrar la ejecución del juego en el CPU, que con el auge de CPU´s modernos con varios hilos de cómputo, hace necesario el uso de estructuras de datos y de una arquitectura especial para poder hacer mejor uso del CPU y brindar una mejor experiencia de juego \cite{andrews2009designing}.
+
+\end{document}
