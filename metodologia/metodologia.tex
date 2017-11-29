@@ -1,0 +1,50 @@
+%!TEX root = ../thesis.tex
+
+\chapter{Metodología de desarrollo}  %Title of the First Chapter
+
+\ifpdf
+    \graphicspath{{metodologia/Figs/Raster/}{metodologia/Figs/PDF/}{metodologia/Figs/}}
+\else
+    \graphicspath{{metodologia/Figs/Vector/}{metodologia/Figs/}}
+\fi
+
+Para el desarrollo del motor de juego se opta por una metodología dirigida por prototipo que permita implementar módulos para el programa y realizar pruebas con cada sobre ellos a media que son agregados. El prototipo a desarrollar en este proyecto no contendrá toda la funcionalidad que posee un motor de juego moderno, pero en cambio implementara lo necesario para exaltar las diferencias causadas por implementar un motor de juego en un entorno funcional.
+
+\section{Módulos de motor gráfico}
+
+Este módulo debe contener las facilidades necesarias para el despliegue de gráficos en una ventana.
+
+\subsection{Manejador de Ventana}
+
+Es el primer elemento necesario para un motor de juego es la creación de una ventana con un contexto donde se puedan dibujar los objetos del juego. Este módulo también tendrá que encargarse de manejo de la entrada del usuario y los eventos relacionados a la ventana.
+
+\subsection{Recursos}
+
+Este módulo debe de proveer de herramientas para cargar recursos multimedia de formatos comunes. Esta sección tendrá un énfasis en imágenes y mayado poligonal que son los dos recursos multimedia con los cuales se puede hacer prototipos de juegos más rápidamente.
+
+\subsection{Shaders}
+
+Este módulo debe encargarse de facilitar la carga y compilación de shaders y ayudar al pasaje de datos del programa al shader.
+
+\subsection{Cámara y despliegue grafico}
+Se necesitan facilidades para el controlar los elementos a dibujar así como la perspectiva a usarse en los dibujos, este módulo debe ser capaz de utilizar los recursos cargados en otros módulos y producir imágenes en la ventana del juego.
+
+\section{Motor lógico}
+
+Esta sección del programa se encargara de mantener y actualizar a los diferentes objetos del juego a medida que transcurre el tiempo. Este módulo debe de proveer al usuario las herramientas necesarias para implementar la lógica de su juego e inicializarlo al ser invocado. Para aprovechar las ventajas de la programación funcional la actualización de objetos debe de ejecutarse de una forma pura.
+
+\subsection{Eventos}
+
+Se debe de proveer acceso a los diferentes eventos y sucesos que ocurren en el juego y fuera de él, los objetos del juego deben de poder consultar por entrada del jugador y cambios que hayan ocurrido en el entorno.
+
+\subsection{Administrador de entrada y salida}
+
+Como la actualización de los objetos del juego es pura, los objetos no son capaces de realizar operaciones de entrada y salida, esta limitación es fatal ya que en todo juego leer y escribir archivos es vital para el funcionamiento de los mismos, es necesario una forma en que los objetos puedan generar pedidos de entrada y salida a ser ejecutados de forma asíncrona por el sistema del motor de juego y cuyo resultado será entregado a los objetos que generaron la acción de entrada y salida.
+
+\subsection{Escenas}
+
+Se debe de poder correr una escena de un juego que contenga una colección de objetos capaces de interacción, los cuales harán uso de los sistemas del motor para dibujar en la ventana del juego.
+
+\subsection{Unión de sistemas}
+
+El motor lógico se encargara también de integrar los módulos a implementar en esta oportunidad (en este caso el motor lógico y el motor gráfico) y proveer una forma de expandir el motor de juego en un futuro y agregar futuros módulos que no sean implementados en esta oportunidad (como un motor de física) sin mayores inconvenientes.

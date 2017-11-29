@@ -1,0 +1,51 @@
+%!TEX root = ../thesis.tex
+
+\section{Motores de videojuego}  %Title of the First Chapter
+
+\ifpdf
+    \graphicspath{{motorJuego/Figs/Raster/}{motorJuego/Figs/PDF/}{motorJuego/Figs/}}
+\else
+    \graphicspath{{motorJuego/Figs/Vector/}{motorJuego/Figs/}}
+\fi
+
+Un motor de videojuego es un término que hace referencia a una serie de rutinas de programación, frameworks u otras herramientas, que permiten el diseño, la creación y la representación de un videojuego. La funcionalidad básica de un motor es proveer al videojuego de un motor de renderizado para los gráficos 2D y 3D, motor físico o detector de colisiones, sonidos, scripting, animación, inteligencia artificial, redes, streaming, administración de memoria y un escenario gráfico. El proceso de desarrollo de juegos es a menudo economizado, en gran parte, mediante la reutilización/adaptación del mismo motor de juego para crear diferentes juegos, o para facilitar la portabilidad de juegos a múltiples plataformas \cite{JasonGregory-GameEngineArchitecture}.
+
+Algunos de los motores de juego más usados en la actualidad, como lo son Source, Unity, Unreal Engine, GameMaker: Studio y CryEngine, son conocidos por ser imperativos, siendo sus funciones más importantes implementadas en lenguaje c++, lenguaje moderno conocido por ayudar en la ejecución de grandes proyectos.
+
+El factor más importante que diferencia un motor de juego de un juego está en que el motor está diseñado con una arquitectura enfocada en los datos. Mientras que un juego contiene una lógica o reglas del juego hard-coded, o emplea un código de caso especial para representar tipos específicos de objetos del juego, se vuelve difícil o imposible reutilizar ese software para hacer un juego diferente. El motor de juego permite el reutilizar de gran parte del código para varios juegos diferentes en una forma modular, donde un programador solo se encarga de programar la lógica de su juego.
+
+Todo juego es por naturaleza una aplicación multimedia, y un motor de juego es responsable de recibir y mantener todos estos recursos (assets en inglés) que vienen en la forma de mayas 3D, bitmaps de texturas, animaciones, audio y cualquier otro elemento que el juego requiera. Todo motor de juego moderno debe de ser capaz de leer recursos multimedia de los diferentes formatos de las aplicaciones usadas por los artistas y dale esos recursos a los subsistemas adecuados para su reproducción.
+
+Por último, y no menos importante, el motor de juego debe de hacerse cargo de administrar los diferentes recursos de la máquina de la manera más eficiente posible. Debe mantener recursos y objetos en RAM, administrar el acceso a disco duro, manejar el ciclo de rendering en el GPU y administrar la ejecución del juego en el CPU, que con el auge de CPUs modernos con varios hilos de cómputo, hace necesario el uso de estructuras de datos y de una arquitectura especial para poder hacer mejor uso del CPU y brindar una mejor experiencia de juego \cite{andrews2009designing}.
+
+\subsection{Programa principal} \label{sec:MTlogica}
+
+La lógica del juego a crear debe de ser implementada en algún algoritmo, de forma independiente del audio u otro componente. Los motores modernos de juego usan un patrón conocido como sistema entidad-componente (ECS) en donde una entidad consiste en uno o más componentes y todos los objetos en el juego son una entidad.
+
+Una entidad es un objeto de propósito general, y suele consistir de no más que un identificador único que lo diferencia a la entidad de otras. Los componentes son el conjunto de información requerida para el funcionamiento de un aspecto del objeto y su interacción con el mundo. Finalmente cada sistema corre de manera continua e interactúa con cada entidad de posea el componente correspondiente.
+
+Con el patrón ECS, un ejemplo común de su uso sería un sistema encargado de dibujar en pantalla interactúa con todos las entidades que tenga, por ejemplo, las componentes de visibilidad y física, estos componentes se encargarían de indicar al sistema como y donde dibujar el objeto.
+
+En los motores de juegos con ECS normalmente se implementa la lógica del juego permitiendo al usuario implementar un componente que será administrado por un sistema que actualizara el componente cada cierto tiempo. En estos sistemas la comunicación entre componentes y sistemas es compleja y varia en varias implementaciones.
+
+\subsection{Motor gráfico}
+
+El motor de gráficos genera gráficos y animaciones 2D o 3D mediante algún método de renderizado.
+
+En lugar de programarse y compilarse para ejecutarse en la CPU o GPU directamente, la mayoría de los motores de gráficos se construyen sobre una o múltiples interfaces de programación de aplicaciones (API), como Direct3D u OpenGL que proporcionan una abstracción de software de la unidad de procesamiento de gráficos (GPU).
+
+\subsection{Motor de audio}
+
+El motor de audio es el componente que consiste en algoritmos relacionados con el sonido. Puede calcular cosas en la CPU o en un ASIC dedicado. Las API de abstracción, como OpenAL, audio SDL, XAudio 2, Web Audio, etc. están disponibles y simplifican la implementación de estos sistemas.
+
+\subsection{Motor de físicas}
+
+Un motor de física es un software que proporciona una simulación aproximada de ciertos sistemas físicos, como la dinámica de cuerpos rígidos (incluida la detección de colisiones), la dinámica del cuerpo blando y la dinámica de fluidos, para ser usado en diferentes dominios como gráficos por computadora, videojuegos y películas.
+
+En general, hay dos clases de motores de física: en tiempo real y de alta precisión. Los motores de física de alta precisión requieren más potencia de procesamiento para calcular la física de mayor precisión y, por lo general, se utilizan para fines científicos y en películas animadas por computadora. Los motores de física en tiempo real usan cálculos simplificados y precisión disminuida para dar una respuesta en tiempo real, y son usados en videojuegos y otros medios de computación interactiva.
+
+En la mayoría de los juegos de computadora, la velocidad de los juegos son más importantes que la precisión de la simulación. Esto conduce a diseños para motores de física que producen resultados en tiempo real pero que replican la física del mundo real solo para casos simples y típicamente con alguna aproximación. Los motores de física para videojuegos generalmente tienen dos componentes principales, un sistema de detección y respuesta a colisiones y el componente de simulación dinámica responsable de resolver las fuerzas que afectan a los objetos simulados.
+
+\subsection{Inteligencia artificial}
+
+La inteligencia artificial generalmente se implementa fuera del programa principal en un módulo especial diseñado y escrito por ingenieros de software con conocimientos especializados.

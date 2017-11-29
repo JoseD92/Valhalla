@@ -1,0 +1,193 @@
+%!TEX root = ../thesis.tex
+
+\setcounter{secnumdepth}{4}
+
+\chapter{Implementacion}  %Title of the First Chapter
+
+\graphicspath{{implementacion/Figs/Vector/}{implementacion/Figs/}}
+
+\section{Motor grafico}
+
+La librería de despliegue gráfico seleccionada para el proyecto es OpenGL, que es una librería que interactúa con el GPU para brindar despliegue grafico acelerado por hardware. OpenGL tiene la ventaja de ser multiplataforma e independiente del sistema de ventanas y del sistema operativo en que corra la aplicación, permitiendo así a nuestra aplicación ser fácilmente portable entre diferentes dispositivos.
+
+\subsection{Manejador de ventana}
+
+La interfaz de OpenGL para haskell es un binding de la librería escrita en lenguaje c, haciendo necesario el uso de apuntadores e IO para poder interactuar con el contexto de OpenGL, siendo el objetivo de este módulo facilitar el despliegue gráfico, es importante hacer una librería que exponga una interfaz más funcional (de la misma forma en la que el monad IO oculta la naturaleza imperativa del mundo exterior) que sea más familiar a los usuarios de lenguajes funcionales y también que la librería provea de facilidades para cargar recursos multimedia al contexto de OpenGL así como controlar el proceso de despliegue gráfico.
+
+El primer paso para usar OpenGL es la creación del contexto, para ello se ha elegido la librería GLUT, que es una librería de utilidades para aplicaciones que utilicen OpenGL, enfocándose primariamente en E/S a nivel de sistema operativo, operaciones como la creación y control de ventanas y entrada del teclado.
+
+Trabajos realizados con GLUT se encuentran en el módulo EasyGLUT~\ref{EasyGLUT}. La primera necesidad a la hora de usar GLUT está en definir callbacks para los diferentes eventos, entrada de mouse y teclado y cambios en el estado de la ventana. La librería provee funciones que inicializan una ventana GLUT (y consigo el contexto de OpenGL) y se definen diversos callbacks para el contexto de GLUT que procesan la entrada de la ventana y se acumula toda la entrada para ser procesada en el ciclo principal del programa.
+
+La información de los callbacks de GLUT es almacenada en el tipo de dato MouseKey, que es una tupla que contiene un mapa del estado de las teclas y la posición del ratón.  Para las teclas se definen cuatro posibles estados Down, Up, Pressed y Released, GLUT dos estados (oprimido o no), pero tener Pressed y Released es una facilidad que da la librería al usuario ya que es común en juego correr código solo en los frames en los que se oprime o se suelta una tecla.
+
+El siguiente paso es facilitar el uso de GLUT dentro del ciclo principal de ejecución. Visto desde un punto de vista funcional, se puede considerar a GLUT como  un conjunto de cómputos que definen y controlan el estado de la ventana GLUT, así, estos cómputos pueden ser visto como un monad \cite{moggi1991notions} \cite{wiki:MonadsComputation} \cite{wiki:MonadsContainers}, que dentro de lenguajes funcionales facilitaría la interacción del usuario con la librería, ocultando apuntadores y demás detalles de comunicación de la librería con GLUT. De esta forma se introduce el monad GLUT que tiene las propiedades de poder ser consultado por eventos externos y entrada de dispositivos además de poder controlar una ventana de despliegue y un contexto de OpenGL. Con este monad es innecesario correr una función peligrosa de tipo IO como ciclo principal de la aplicación, sino que podemos correr una función de tipo GLUT en la cual se puede garantizar el correcto uso del estado global que representa el contexto de GLUT gracias a las restricciones y garantías del monad.
+
+Para interactuar con la ventana y con GLUT el usuario puede usar cualquiera de las funciones de tipo GLUT () y las funciones initOpenGLEnvironment y initGL que sirven para inicializar.
+
+\subsection{Carga de recursos}
+
+\subsubsection{Mayado poligonal}
+
+El formato de archivos de mayado poligonal elegido para este proyecto es Wavefront .obj, que es un formato que guarda en forma simple información de geometría 3D en texto plano. Este es uno de los formatos más antiguos y es soportado por la gran mayoría de las herramientas de creación usadas por los artistas.
+
+Ya que la información en un archivo Obj se guarda en texto plano, se crea un lexer y parser que puedan leer la información de un archivo. La información es guardada en el mismo formato en el tipo de dato Obj implementado en el módulo EasyGL.Obj.
+
+\subsubsection{Imágenes}
+
+Para la carga de imágenes se usa la librería JuicyPixels \cite{libreria:JuicyPixels} que soporta la leer imágenes en los formatos PNG,Bitmap, Jpeg, Radiance, Tiff y Gif. La carga de las imágenes se realiza en el módulo EasyGL.Material~\ref{EasyGL.Material} al crear un material.
+
+\subsection{Shaders}
+
+El módulo EasyGL.Shader~\ref{EasyGL.Shader} provee facilidades para cargar y compilar archivos de shaders a OpenGL. Todos los shaders compilados con esta librería poseerán atributos adicionales para recibir la posición del vértice, junto con su normal y coordenada de textura.
+
+Este módulo ofrece funciones para cargar shaders de archivos y compilarlos. También implementa la función withShader que permite usar un shader en OpenGL de una manera funcional.
+
+Adicionalmente, de la misma forma en que se realizó con GLUT,  se creó el monad Uniform que representa las acciones de cargar datos a los atributos de los shaders, que combinado con una clase Uniform, ayuda a garantizar que solo datos que puedan ser aceptados por el GPU sean cargados a este. Este monad premite la creación de la función withShaderSafe que permite usar un shader en forma segura ya que todo el pasaje de información al shader se hace por el monad Uniform.
+
+\subsection{Materiales}
+
+En el módulo EasyGL.Material~\ref{EasyGL.Material} define el tipo de dato Material que contiene referencia a un shader ya compilado y a texturas que ya han sido cargadas a OpenGL. Este módulo solo ofrece la facilidad de cargar automáticamente texturas al shader contenido en el material.
+
+\subsection{Cámara}
+
+El módulo EasyGL.Camera~\ref{EasyGL.Camera} ofrece una abstracción de cámara fácil de usar, que oculta las dificultades de configurar la visión en OpenGL así como la manipulación de matrices de transformación que ellos implican.
+
+\subsection{Despliegue gráfico}
+
+Para poder hacer uso de los mayados poligonales se debe primero cargar el mayado al GPU, en OpenGL se hace creando un VAO (Vertex Array Object) que es un objeto que almacena información en el GPU para dibujar un objeto en pantalla. Para este proyecto solo se usaran VAO’s para cargar información de la posición de los vértices, la coordenada de las texturas y las normales del objeto, que es información que podemos obtener de los archivos Obj.
+
+En el módulo EasyGL.IndexedModel~\ref{EasyGL.IndexedModel} se implementa el tipo de dato IndexedModel que almacena la información del mayado en un formato para ser cargado al GPU, que implica tener la posición de los vértices, la coordenada de las texturas y las normales del objeto en arreglos diferentes y otro arreglo adicional que contiene índices indicativos al orden en que se usaran los datos de cada arreglo. Con este tipo de dato intermedio cualquier formato de archivo que se quiera cargar al entorno de OpenGL solo se requiere implementar código que transforme cualquier formato en un IndexedModel.
+
+Los archivos Obj guardan índices diferentes para de  la posición de los vértices, la coordenada de las texturas y las normales del objeto, en cambio un IndexedModel posee un solo arreglo de índice para los tres, en el módulo EasyGL.Obj.Obj2IM~\ref{EasyGL.Obj.Obj2IM} se implementa la función toIndexedModel que reordena la información obtenida de un archivo Obj y retorna un IndexedModel para ser cargado al GPU.
+
+Para cargar y dibujar en pantalla un IndexedModel se usan las funciones implementadas en el modulo EasyGL.Entity~\ref{EasyGL.Entity}.
+
+
+%\subsection{Extras}
+
+%\subsubsection{Utils}
+%\subsubsection{mem}
+
+\section{Motor lógico}
+
+Permitir que el usuario implemente la lógica de su juego es de vital importancia para todo motor de juego, y como ya se mencionó en la sección~\ref{sec:MTlogica}, los motores de juegos modernos emplean  el patrón sistema entidad-componente , este patrón de diseño en su implementación depende en gran medida de la existencia de un estado mutable, la lógica creada por el usuario inevitablemente tiene que modificar componentes de una o más entidades para poder así generar cambios en el estado del juego. Sistemas implementados usando este patrón además requieren complejos sistemas para llevar a cabo la comunicación entre diversos subsistemas, y además, como muestra Jeff Andrews \cite{andrews2009designing}, la complejidad se hace mucho mayor cuando se quiere que estos sistemas corran de forma concurrente para hacer mejor use de procesadores modernos.
+
+La implementación de un sistema que haga uso del patrón sistema entidad-componente en un lenguaje funcional como haskell es posible si se hace que todas las entidades se referencien con apuntadores y solo sean accesibles dentro del monad IO, semejante implementación podría dar los mismos resultados que en lenguajes imperativos, pero se incurriría en los mismos problemas sufridos en estos lenguajes además de no aprovechar ninguna de las ventajas que ofrece la programación funcional como las funciones puras.
+
+La programación funcional reactiva es un paradigma de programación que nos permite sustituir al modelo sistema entidad-componente. Para este proyecto se ha decidido usar la librería Yampa, que implementa FRP y puede ser usado para mantener y actualizar una colección de entidades en forma pura.
+
+\subsection{Tipos de datos}
+
+Siguiendo el ejemplo de visto en “The Yampa Arcade” \cite{Courtney2003b}, podemos representar los objetos del juego como una SF que recibe como entrada el estado previo del juego y la entrada del jugador y retorna el nuevo estado del objeto así como la información necesaria para interactuar con los subsistemas del motor. Así un objeto tiene la forma:
+
+\begin{lstlisting}[label={ObjDef1},frame=single,language=Haskell]
+type Object = SF ObjInput ObjOutput
+\end{lstlisting}
+
+Esta abstracción nos permite distinguir los objetos de nuestro juego de otras SF. ObjInput y ObjOutput deben de ser definidos tomando en consideración que el usuario debe de poder usar su propio tipo de dato para representar el estado del juego y otro tipo de dato que represente los eventos que este quiera generar por su cuenta.
+
+\begin{lstlisting}[label={ObjInputDef},frame=single,language=Haskell]
+data ObjInput state eventType = ObjInput {
+  oiEvents :: Event eventType,
+  oiGameInput :: GameInput,
+  oiPastFrame :: IL state
+}
+\end{lstlisting}
+
+ObjInput es definido como un tipo de dato que contiene la entrada del juego representada en el tipo GameInput, eventos que este objeto reciba y la colección de los objetos en el frame anterior del juego.
+
+\begin{lstlisting}[label={ObjOutputDef},frame=single,language=Haskell]
+data ObjOutput state eventType = ObjOutput {
+  ooObjState :: !state,
+  ooRenderer :: Maybe (ResourceIdentifier,Transform,Uniform ()),
+  ooKillReq :: Event (),
+  ooSpawnReq :: Event [Object state eventType],
+  ooWorldReq :: [IOReq eventType],
+  ooWorldSpawn :: [IO ()],
+  ooUIReq :: [UIActions]
+}
+\end{lstlisting}
+
+Cada registro del tipo ObjOutput almacena:
+
+\begin{itemize}
+\item ooObjState: el estado de salida del objeto. Contiene la información relevante a la lógica del juego y es el único campo visible por otros objetos. Es estricto para garantizar que no existan fugas de memoria.
+\item ooRenderer: este campo permite al objeto indicar al motor gráfico que dibujar. Si este campo contiene un Nothing entonces nada será dibujado en pantalla, de ser un Just, este contendrá una tupla con el id del mesh a usar, la posición en el espacio y los datos a enviar al shader.
+\item ooKillReq: indica al sistema si se debe o no destruir el objeto.
+\item ooSpawnReq: indica al sistema los nuevos objetos que se quiere crear.
+\item ooWorldReq: hace al sistema iniciar una nueva operación de E/S cuyo resultado será de tipo eventType. Este resultado será luego devuelto al objeto vía ObjInput cuando esté disponible.
+\item ooWorldSpawn: crea una nueva operación de E/S cuyo resultado no importa.
+\item ooUIReq: permite interactuar con el manejador de ventana (GLUT en este caso).
+\end{itemize}
+
+Con la entrada y salida de nuestros objetos definidos, la nueva firma del tipo objeto pasa a ser:
+
+\begin{lstlisting}[label={ObjDef2},frame=single,language=Haskell]
+type Object outState eventType = SF
+    (ObjInput outState eventType)
+    (ObjOutput outState eventType)
+\end{lstlisting}
+
+Ahora que se ha definido el tipo de datos para los objetos del juego, es necesario poder crear una colección de estos objetos, esta colección requiere que cada objeto pueda ser identificado de manera única. En el módulo Val.Strict.IL~\ref{Val.Strict.IL} se implementa el tipo de dato IL (Identity List), IL se define como:
+
+\begin{lstlisting}[frame=single,language=Haskell]
+type ILKey = Integer
+data IL a = IL {
+    ilNext :: ILKey,
+    ilAssocs :: Map ILKey a
+  }
+\end{lstlisting}
+
+El tipo IL almacena los objetos en un mapa de la librería Data.Map, que este posee muy buen tiempo para insertar, eliminar, consultar y recorrer, de usar un arreglo el tiempo para la inserción, la eliminación y la consulta serían mayores por requerir que los objetos sean identificables. Cada objeto es identificado con un ILKey al momento de ser insertado.
+
+Para hacer su uso lo más conveniente posible, el modulo Val.Strict.IL~\ref{Val.Strict.IL} define múltiples funciones de consulta y modificación con IL además de incluir a IL en las clases Functor, Foldable, Traversable y NFData.
+
+\subsection{Escenas}
+\label{sec:Escenas}
+
+Para crear una escena de juego, se requiere primero una forma de actualizar la colección de objetos, para ellos se hace uso del dpSwitch de la librería Yampa. Este suiche se caracteriza por manejar colecciones dinámicas de objetos, en el módulo Val.Strict.Scene~\ref{Val.Strict.Scene} se hace uso de este suiche para crear la SF “sceneSF” que tiene la firma:
+
+\begin{lstlisting}[frame=single,language=Haskell]
+SF
+  (GameInput, IL (ObjOutput s et), IL (Event et))
+  (IL (ObjOutput s et))
+\end{lstlisting}
+
+La SF sceneSF recibe como entrada el estado de la ventana y entrada del usuario, el estado de los objetos en el frame anterior y eventos que deban ser enviados a objetos específicos, y retorna como resultado los objetos actualizados.
+
+Con sceneSF es posible ahora implementar el ciclo principal del juego, el módulo Val.Strict.Scene~\ref{Val.Strict.Scene} implementa la función initScene, que dado la información de los recursos a usar, una SF que controle una cámara y una colección inicial de objetos, carga todos los recursos al sistema e inicia el ciclo principal.
+
+La función initScene inicia la escena del juego creando tres hilos de cómputo encargados de tareas específicas:
+
+\begin{itemize}
+\item Hilo 1, hilo lógico: Este hilo se caracteriza por actualizar la colección de objetos cada frame, este hilo inicia recibiendo la entrada del usuario del hilo 2 y el retorno de las funciones asíncronas generadas por los objetos manejados por el hilo 3. Con estos dos datos se actualizan los objetos en base al tiempo transcurrido y la salida de ellos es transmitida a los otros hilos.
+\item Hilo 2, hilo de despliegue: Este hilo maneja el contexto de OpenGL y GLUT, incia enviando la entrada del usuario al hilo 1 y recibe la salida de los objetos generados en el hilo 1. Con esta salida se puede generar el despliegue de gráficos.
+\item Hilo 3, hilo de IO: Este hilo existe para que los objetos del juego puedan ejecutar funciones IO de manera asíncrona. Este hilo mantiene una lista de todas las funciones asíncronas en corrida. Este hilo inicia evaluando la culminación de alguna función y enviando los resultados al hilo 1, luego recibe la salida del hilo 1 y corre cualquier nueva función asíncrona que los objetos soliciten.
+\end{itemize}
+
+\begin{figure}[htbp!]
+\centering
+\includegraphics[width=1.0\textwidth]{ciclo_de_juego}
+\caption[Ciclo de juego]{Esta figura muestra los diferentes hilos que corren en una escena de juego y a donde se envian los resultados de cada unos de ellos.}
+\label{fig:ciclo_de_juego}
+\end{figure}
+
+Como cada hilo solo requiere de una referencia a los resultados de los objetos del juego para correr, que son valores inmutables y por lo tanto no pueden afectar a otros hilos, se puede añadir otros hilos nuevos con otro tipo de funcionalidad como sonido, networking, inteligencia artificial, entre otros, sin alterar el funcionamiento ya implementado y sin modificar la lógica actual.
+
+La comunicación entre los diferentes hilos se logra con el uso de MVar, que son apuntadores especiales de haskell que tienen la propiedad de funcionar como semáforos, haciendo que los hilos solo puedan enviar información a otros una vez estos estén listos para recibirla. El uso de estas MVar causa, en la implementación actual, que todos los hilos se sincronicen al más lento.
+
+El módulo Val.Strict.Scene~\ref{Val.Strict.Scene} ademas aprovecha el echo de que el tipo IL implemente la clase Traversable, con esta clase se puede usar la librería Control.Parallel.Strategies de haskell para que el calculo de los diferentes objetos del juego se realice en forma concurrente manejado por el runtime environment de haskell, permitiendo que los cálculos realizados en el hilo lógico puedan realizare en más de un procesador. Para poder usar esta versión del hilo lógico, el usuario solo debe cambiar la llamada de la función initScene por la función initScenePar implementada en el mismo módulo.
+
+\subsection{Utilidades}
+
+Ya que FRP es un concepto complicado (de aprender a usar), puede resultar ser una barrera para usar el motor de juego, por ello se ha creado en el módulo Val.Strict.Util~\ref{Val.Strict.Util} la función makeSF que tiene la firma:
+
+\begin{lstlisting}[frame=single,language=Haskell]
+makeSF :: a
+  -> (a -> ObjInput b c -> (a,ObjOutput b c))
+  -> Object b c
+\end{lstlisting}
+
+Con la función makeSF el usuario puede crear un objeto de juego sin usar FRP o la librería Yampa. Esta función toma como primer argumento un estado inicial y de segundo una función que toma ese estado, una entrada de objeto y retorna el estado actualizado y una salida de objetos.
+
+Sin embargo esta forma de crear objetos de juego carece de la capacidad de cambiar comportamiento a medida que corre el programa que posee FRP, un objeto creado con esta función solo podrá tener el comportamiento de la función dada en el segundo argumento. La única manera de cambiar el comportamiento es creando un objeto nuevo y destruir el viejo.

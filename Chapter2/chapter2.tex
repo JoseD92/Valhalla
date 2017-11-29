@@ -1,0 +1,30 @@
+%!TEX root = ../thesis.tex
+%*******************************************************************************
+%****************************** Second Chapter *********************************
+%*******************************************************************************
+
+\chapter{Programación Funcional Reactiva}
+
+\ifpdf
+    \graphicspath{{Chapter2/Figs/Raster/}{Chapter2/Figs/PDF/}{Chapter2/Figs/}}
+\else
+    \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
+\fi
+
+La programación reactiva funcional (FRP, por sus siglas en ingles) es un enfoque elegante para especificar de forma declarativa los sistemas reactivos, que son sistemas orientados en la propagación de cambios de multiples entidades.
+
+FRP integra la idea de flujo de tiempo y composición de eventos en la programación puramente funcional. Al manejar el flujo de tiempo de manera uniforme y generalizada, una aplicación obtiene claridad y fiabilidad. Así como la evaluación perezosa puede eliminar la necesidad de estructuras de control complejas, una noción uniforme de flujo de tiempo soporta un estilo de programación más declarativo que oculta un complejo mecanismo subyacente. Esto proporciona una manera elegante de expresar la computación en dominios como animaciones interactivas \cite{eh97:fran}, robótica \cite{Pembeci:2002:FRR:571157.571174}, visión por computadora, interfaces de usuario \cite{czaplicki2012elm} y simulación.
+
+Las implementaciones más comunes de FRP para haskell  hacen uso de la notación de flechas, que son una nueva manera abstracta de visualizar los cómputos, creada por John Hughes \cite{hughes2000generalising}. Las flechas, al igual que los monads, proveen una estructura común para la implementación de librerías siendo más generales que los monads. John Hughes demostró que existen tipos de datos que no se adaptan bien a la estructura de monads causando así fugas de memoria indeseadas, que con flechas pueden ser resueltas en lenguajes funciones como haskell \cite{hughes2000generalising}. Adicionalmente las librerías de FRP en haskell usan una extensión del lenguaje propuesta por Ross  Paterson \cite{paterson2001new} que hace el uso de flechas mucho más fácil y conveniente que la versión original creada por Hughes. Para mas detalles de la evolución de FRP leer \say{Elm: Concurrent FRP for Functional GUIs} \cite{czaplicki2012elm} capitulo 2.1.
+
+\section{Reasonably long section title}
+
+
+
+
+\begin{figure}[htbp!]
+\centering
+\includegraphics[width=1.0\textwidth]{minion}
+\caption[Minion]{This is just a long figure caption for the minion in Despicable Me from Pixar}
+\label{fig:minion}
+\end{figure}
