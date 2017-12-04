@@ -8,9 +8,9 @@
     \graphicspath{{resultados/Figs/Vector/}{resultados/Figs/}}
 \fi
 
-\section{Ejemplos}
+El proyecto logró producir una herramienta que permite la creación de juegos en lenguaje Haskell. Para poder comprobar su funcionalidad y desempeño se hace uso de programas de ejemplo creados usando la herramienta.
 
-\subsection{Ejemplos motor gráfico}
+\section{Ejemplo motor gráfico}
 
 Para la prueba del motor gráfico se creó un programa que dibuja en pantalla el armadillo de Stanford en color amarillo. Este programa no tiene ninguna clase de interacción. Se puede ver el programa en la sección de código Ejemplo1~\ref{Ejemplo1}, el código requerido para este programa es sencillo y corto gracias al motor.
 
@@ -20,7 +20,7 @@ Para la prueba del motor gráfico se creó un programa que dibuja en pantalla el
 \caption[Ejemplo 1]{El armadillo de Stanford dibujado en color amarillo.}
 \end{figure}
 
-\subsection{Ejemplos motor de juego}
+\section{Ejemplo motor de juego}
 
 El motor de juego se prueba mediante un programa que crea un número de esferas que se mueven en alguna dirección e invierten la dirección en la que se mueven cuando colisionan con otra esfera o llegan al límite de un área predefinida. Este ejemplo se puede encontrar en la sección de código Ejemplo2~\ref{Ejemplo2}.
 
@@ -56,9 +56,7 @@ Este ejemplo muestra que el uso de hilos en el motor provee de mayor rendimiento
 \caption[Ejemplo 2]{200 esferas.}
 \end{figure}
 
-\section{Observaciones sobre el motor}
-
-\subsection{Sobre GLUT y OpenGL}
+\section{Sobre GLUT y OpenGL}
 
 El uso de monads para expresar las operaciones relativas a GLUT resulta como una manera más cómoda y segura para interactuar con la librería según la experiencia adquirida en el uso del monad. Esta experiencia es consistente con un caso similar en el cual Facebook uso monads y Aplicative (clase de haskell) para expresar cómputos paralelos en sus reglas de filtrado de spam, que gracias a la notación de monad de haskell hace el código más limpio y seguro \cite{marlow2014there} \cite{Facebook:Fighting} \cite{Facebook:sourcing}.
 
