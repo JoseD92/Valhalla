@@ -14,9 +14,9 @@ Algunos de los motores de juego más usados en la actualidad, como lo son Source
 
 El factor más importante que diferencia un motor de juego de un juego está en que el motor está diseñado con una arquitectura enfocada en los datos. Mientras que un juego contiene una lógica o reglas del juego hard-coded, o emplea un código de caso especial para representar tipos específicos de objetos del juego, se vuelve difícil o imposible reutilizar ese software para hacer un juego diferente. El motor de juego permite el reutilizar de gran parte del código para varios juegos diferentes en una forma modular, donde un programador solo se encarga de programar la lógica de su juego.
 
-Todo juego es por naturaleza una aplicación multimedia, y un motor de juego es responsable de recibir y mantener todos estos recursos (assets en inglés) que vienen en la forma de mayas 3D, bitmaps de texturas, animaciones, audio y cualquier otro elemento que el juego requiera. Todo motor de juego moderno debe de ser capaz de leer recursos multimedia de los diferentes formatos de las aplicaciones usadas por los artistas y dale esos recursos a los subsistemas adecuados para su reproducción.
+Todo juego es por naturaleza una aplicación multimedia, y un motor de juego es responsable de recibir y mantener todos estos recursos (assets en inglés) que vienen en la forma de mallados 3D, bitmaps de texturas, animaciones, audio y cualquier otro elemento que el juego requiera. Todo motor de juego moderno debe de ser capaz de leer recursos multimedia de los diferentes formatos de las aplicaciones usadas por los artistas y usar esos recursos en el subsistema adecuado para su reproducción.
 
-Por último, y no menos importante, el motor de juego debe de hacerse cargo de administrar los diferentes recursos de la máquina de la manera más eficiente posible. Debe mantener recursos y objetos en RAM, administrar el acceso a disco duro, manejar el ciclo de rendering en el GPU y administrar la ejecución del juego en el CPU, que con el auge de CPUs modernos con varios hilos de cómputo, hace necesario el uso de estructuras de datos y de una arquitectura especial para poder hacer mejor uso del CPU y brindar una mejor experiencia de juego \cite{andrews2009designing}.
+Por último, y no menos importante, el motor de juego debe de hacerse cargo de administrar los diferentes recursos de la máquina de la manera más eficiente posible. Debe mantener recursos y objetos en RAM, administrar el acceso a disco duro, manejar el ciclo de dibujo del GPU y administrar la ejecución del juego en el CPU, que con el auge de CPUs modernos con varios hilos de cómputo, hace necesario el uso de estructuras de datos y de una arquitectura especial para poder hacer mejor uso del CPU y brindar una mejor experiencia de juego \cite{andrews2009designing}.
 
 \subsection{Programa principal} \label{sec:MTlogica}
 
@@ -30,9 +30,9 @@ En los motores de juegos con ECS normalmente se implementa la lógica del juego 
 
 \subsection{Motor gráfico}
 
-El motor de gráficos genera gráficos y animaciones 2D o 3D mediante algún método de renderizado.
+El motor de gráficos genera gráficos y animaciones 2D o 3D mediante algún método de dibujo.
 
-En lugar de programarse y compilarse para ejecutarse en la CPU o GPU directamente, la mayoría de los motores de gráficos se construyen sobre una o múltiples interfaces de programación de aplicaciones (API), como Direct3D u OpenGL que proporcionan una abstracción de software de la unidad de procesamiento de gráficos (GPU).
+En lugar de programarse y compilarse para ejecutarse en la CPU o GPU directamente, la mayoría de los motores de gráficos se construyen sobre una o múltiples interfaces de programación de aplicaciones (API), como Direct3D u OpenGL siendo las más comunes, que proporcionan una abstracción de software de la unidad de procesamiento de gráficos (GPU).
 
 \subsection{Motor de audio}
 
