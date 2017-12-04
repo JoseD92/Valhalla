@@ -20,13 +20,14 @@ Es el primer elemento necesario para un motor de juego es la creación de una ve
 
 \subsection{Recursos}
 
-Este módulo debe de proveer de herramientas para cargar recursos multimedia de formatos comunes. Esta sección tendrá un énfasis en imágenes y mayado poligonal que son los dos recursos multimedia con los cuales se puede hacer prototipos de juegos más rápidamente.
+Este módulo debe de proveer de herramientas para cargar recursos multimedia de formatos comunes. Esta sección tendrá un énfasis en imágenes y mallas poligonal que son los dos recursos multimedia con los cuales se puede hacer prototipos de juegos más rápidamente.
 
 \subsection{Shaders}
 
 Este módulo debe encargarse de facilitar la carga y compilación de shaders y ayudar al pasaje de datos del programa al shader.
 
 \subsection{Cámara y despliegue grafico}
+
 Se necesitan facilidades para el controlar los elementos a dibujar así como la perspectiva a usarse en los dibujos, este módulo debe ser capaz de utilizar los recursos cargados en otros módulos y producir imágenes en la ventana del juego.
 
 \section{Motor lógico}
@@ -39,7 +40,7 @@ Se debe de proveer acceso a los diferentes eventos y sucesos que ocurren en el j
 
 \subsection{Administrador de entrada y salida}
 
-Como la actualización de los objetos del juego es pura, los objetos no son capaces de realizar operaciones de entrada y salida, esta limitación es fatal ya que en todo juego leer y escribir archivos es vital para el funcionamiento de los mismos, es necesario una forma en que los objetos puedan generar pedidos de entrada y salida a ser ejecutados de forma asíncrona por el sistema del motor de juego y cuyo resultado será entregado a los objetos que generaron la acción de entrada y salida.
+Como la actualización de los objetos del juego es pura, los objetos no son capaces de realizar operaciones de entrada y salida, esta limitación es fatal ya que en todo juego leer y escribir archivos es vital para el funcionamiento de los mismos, es necesario una forma en que los objetos puedan generar pedidos de entrada y salida a ser ejecutados de forma asíncrona por el sistema del motor de juego y cuyo resultado será retornado a los objetos que generaron la acción de entrada y salida.
 
 \subsection{Escenas}
 

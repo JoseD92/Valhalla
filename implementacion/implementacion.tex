@@ -12,7 +12,7 @@ La librería de despliegue gráfico seleccionada para el proyecto es OpenGL, que
 
 \subsection{Manejador de ventana}
 
-La interfaz de OpenGL para haskell es un binding de la librería escrita en lenguaje c, haciendo necesario el uso de apuntadores e IO para poder interactuar con el contexto de OpenGL, siendo el objetivo de este módulo facilitar el despliegue gráfico, es importante hacer una librería que exponga una interfaz más funcional (de la misma forma en la que el monad IO oculta la naturaleza imperativa del mundo exterior) que sea más familiar a los usuarios de lenguajes funcionales y también que la librería provea de facilidades para cargar recursos multimedia al contexto de OpenGL así como controlar el proceso de despliegue gráfico.
+La interfaz de OpenGL para haskell hace uso de la librería escrita en lenguaje c a través de la interfaz de funciones foráneas de Haskell, haciendo necesario el uso de apuntadores e IO para poder interactuar con el contexto de OpenGL, siendo el objetivo de este módulo facilitar el despliegue gráfico, es importante hacer una librería que exponga una interfaz más funcional (de la misma forma en la que el monad IO oculta la naturaleza imperativa del mundo exterior) que sea más familiar a los usuarios de lenguajes funcionales y también que la librería provea de facilidades para cargar recursos multimedia al contexto de OpenGL así como controlar el proceso de despliegue gráfico.
 
 El primer paso para usar OpenGL es la creación del contexto, para ello se ha elegido la librería GLUT, que es una librería de utilidades para aplicaciones que utilicen OpenGL, enfocándose primariamente en E/S a nivel de sistema operativo, operaciones como la creación y control de ventanas y entrada del teclado.
 
@@ -26,15 +26,15 @@ Para interactuar con la ventana y con GLUT el usuario puede usar cualquiera de l
 
 \subsection{Carga de recursos}
 
-\subsubsection{Mayado poligonal}
+\subsubsection{Mallado poligonal}
 
-El formato de archivos de mayado poligonal elegido para este proyecto es Wavefront .obj, que es un formato que guarda en forma simple información de geometría 3D en texto plano. Este es uno de los formatos más antiguos y es soportado por la gran mayoría de las herramientas de creación usadas por los artistas.
+El formato de archivos de mallado poligonal elegido para este proyecto es Wavefront .obj, que es un formato que guarda en forma simple información de geometría 3D en texto plano. Este es uno de los formatos más antiguos y es soportado por la gran mayoría de las herramientas de creación usadas por los artistas.
 
-Ya que la información en un archivo Obj se guarda en texto plano, se crea un lexer y parser que puedan leer la información de un archivo. La información es guardada en el mismo formato en el tipo de dato Obj implementado en el módulo EasyGL.Obj.
+Ya que la información en un archivo Obj se guarda en texto plano, se crea un lexer y parser que puedan leer la información de un archivo. La información es guardada en el mismo formato en el tipo de dato Obj implementado en el módulo EasyGL.Obj~\ref{EasyGL.Obj}.
 
 \subsubsection{Imágenes}
 
-Para la carga de imágenes se usa la librería JuicyPixels \cite{libreria:JuicyPixels} que soporta la leer imágenes en los formatos PNG,Bitmap, Jpeg, Radiance, Tiff y Gif. La carga de las imágenes se realiza en el módulo EasyGL.Material~\ref{EasyGL.Material} al crear un material.
+Para la carga de imágenes se usa la librería JuicyPixels \cite{libreria:JuicyPixels} que soporta la lectura de imágenes en los formatos PNG, Bitmap, Jpeg, Radiance, Tiff y Gif. La carga de las imágenes se realiza en el módulo EasyGL.Material~\ref{EasyGL.Material} al crear un material.
 
 \subsection{Shaders}
 
@@ -54,11 +54,11 @@ El módulo EasyGL.Camera~\ref{EasyGL.Camera} ofrece una abstracción de cámara 
 
 \subsection{Despliegue gráfico}
 
-Para poder hacer uso de los mayados poligonales se debe primero cargar el mayado al GPU, en OpenGL se hace creando un VAO (Vertex Array Object) que es un objeto que almacena información en el GPU para dibujar un objeto en pantalla. Para este proyecto solo se usaran VAO’s para cargar información de la posición de los vértices, la coordenada de las texturas y las normales del objeto, que es información que podemos obtener de los archivos Obj.
+Para poder hacer uso de los mallados poligonales se debe primero cargar el mallado al GPU, en OpenGL se hace creando un VAO (Vertex Array Object) que es un objeto que almacena información en el GPU para dibujar un objeto en pantalla. Para este proyecto solo se usaran VAO’s para cargar información de la posición de los vértices, la coordenada de las texturas y las normales del objeto, que es información que podemos obtener de los archivos Obj.
 
 En el módulo EasyGL.IndexedModel~\ref{EasyGL.IndexedModel} se implementa el tipo de dato IndexedModel que almacena la información del mayado en un formato para ser cargado al GPU, que implica tener la posición de los vértices, la coordenada de las texturas y las normales del objeto en arreglos diferentes y otro arreglo adicional que contiene índices indicativos al orden en que se usaran los datos de cada arreglo. Con este tipo de dato intermedio cualquier formato de archivo que se quiera cargar al entorno de OpenGL solo se requiere implementar código que transforme cualquier formato en un IndexedModel.
 
-Los archivos Obj guardan índices diferentes para de  la posición de los vértices, la coordenada de las texturas y las normales del objeto, en cambio un IndexedModel posee un solo arreglo de índice para los tres, en el módulo EasyGL.Obj.Obj2IM~\ref{EasyGL.Obj.Obj2IM} se implementa la función toIndexedModel que reordena la información obtenida de un archivo Obj y retorna un IndexedModel para ser cargado al GPU.
+Los archivos Obj guardan índices diferentes para de la posición de los vértices, la coordenada de las texturas y las normales del objeto, en cambio un IndexedModel posee un solo arreglo de índice para los tres, en el módulo EasyGL.Obj.Obj2IM~\ref{EasyGL.Obj.Obj2IM} se implementa la función toIndexedModel que reordena la información obtenida de un archivo Obj y retorna un IndexedModel para ser cargado al GPU.
 
 Para cargar y dibujar en pantalla un IndexedModel se usan las funciones implementadas en el modulo EasyGL.Entity~\ref{EasyGL.Entity}.
 
@@ -70,7 +70,7 @@ Para cargar y dibujar en pantalla un IndexedModel se usan las funciones implemen
 
 \section{Motor lógico}
 
-Permitir que el usuario implemente la lógica de su juego es de vital importancia para todo motor de juego, y como ya se mencionó en la sección~\ref{sec:MTlogica}, los motores de juegos modernos emplean  el patrón sistema entidad-componente , este patrón de diseño en su implementación depende en gran medida de la existencia de un estado mutable, la lógica creada por el usuario inevitablemente tiene que modificar componentes de una o más entidades para poder así generar cambios en el estado del juego. Sistemas implementados usando este patrón además requieren complejos sistemas para llevar a cabo la comunicación entre diversos subsistemas, y además, como muestra Jeff Andrews \cite{andrews2009designing}, la complejidad se hace mucho mayor cuando se quiere que estos sistemas corran de forma concurrente para hacer mejor use de procesadores modernos.
+Permitir que el usuario implemente la lógica de su juego es de vital importancia para todo motor de juego, y como ya se mencionó en la sección~\ref{sec:MTlogica}, los motores de juegos modernos emplean el patrón sistema entidad-componente, este patrón de diseño en su implementación depende en gran medida de la existencia de un estado mutable, la lógica creada por el usuario inevitablemente tiene que modificar componentes de una o más entidades para poder así generar cambios en el estado del juego. Sistemas implementados usando este patrón además requieren complejos sistemas para llevar a cabo la comunicación entre diversos subsistemas, y además, como muestra Jeff Andrews \cite{andrews2009designing}, la complejidad se hace mucho mayor cuando se quiere que estos sistemas corran de forma concurrente para hacer mejor use de procesadores modernos.
 
 La implementación de un sistema que haga uso del patrón sistema entidad-componente en un lenguaje funcional como haskell es posible si se hace que todas las entidades se referencien con apuntadores y solo sean accesibles dentro del monad IO, semejante implementación podría dar los mismos resultados que en lenguajes imperativos, pero se incurriría en los mismos problemas sufridos en estos lenguajes además de no aprovechar ninguna de las ventajas que ofrece la programación funcional como las funciones puras.
 
@@ -140,7 +140,7 @@ data IL a = IL {
 
 El tipo IL almacena los objetos en un mapa de la librería Data.Map, que este posee muy buen tiempo para insertar, eliminar, consultar y recorrer, de usar un arreglo el tiempo para la inserción, la eliminación y la consulta serían mayores por requerir que los objetos sean identificables. Cada objeto es identificado con un ILKey al momento de ser insertado.
 
-Para hacer su uso lo más conveniente posible, el modulo Val.Strict.IL~\ref{Val.Strict.IL} define múltiples funciones de consulta y modificación con IL además de incluir a IL en las clases Functor, Foldable, Traversable y NFData.
+Para hacer su uso lo más conveniente posible, el modulo Val.Strict.IL~\ref{Val.Strict.IL} define múltiples funciones de consulta y modificación con IL, además de incluir a IL en las clases Functor, Foldable, Traversable y NFData.
 
 \subsection{Escenas}
 \label{sec:Escenas}
@@ -161,14 +161,14 @@ La función initScene inicia la escena del juego creando tres hilos de cómputo 
 
 \begin{itemize}
 \item Hilo 1, hilo lógico: Este hilo se caracteriza por actualizar la colección de objetos cada frame, este hilo inicia recibiendo la entrada del usuario del hilo 2 y el retorno de las funciones asíncronas generadas por los objetos manejados por el hilo 3. Con estos dos datos se actualizan los objetos en base al tiempo transcurrido y la salida de ellos es transmitida a los otros hilos.
-\item Hilo 2, hilo de despliegue: Este hilo maneja el contexto de OpenGL y GLUT, incia enviando la entrada del usuario al hilo 1 y recibe la salida de los objetos generados en el hilo 1. Con esta salida se puede generar el despliegue de gráficos.
-\item Hilo 3, hilo de IO: Este hilo existe para que los objetos del juego puedan ejecutar funciones IO de manera asíncrona. Este hilo mantiene una lista de todas las funciones asíncronas en corrida. Este hilo inicia evaluando la culminación de alguna función y enviando los resultados al hilo 1, luego recibe la salida del hilo 1 y corre cualquier nueva función asíncrona que los objetos soliciten.
+\item Hilo 2, hilo de despliegue: Este hilo maneja el contexto de OpenGL y GLUT, inicia enviando la entrada del usuario al hilo 1 y recibe la salida de los objetos generados en el hilo 1. Con esta salida se puede generar el despliegue de gráficos.
+\item Hilo 3, hilo de E/S: Este hilo existe para que los objetos del juego puedan ejecutar funciones de E/S de manera asíncrona. Este hilo mantiene una lista de todas las funciones asíncronas en corrida. Este hilo inicia evaluando la culminación de alguna función y enviando los resultados al hilo 1, luego recibe la salida del hilo 1 y corre cualquier nueva función asíncrona que los objetos soliciten.
 \end{itemize}
 
 \begin{figure}[htbp!]
 \centering
 \includegraphics[width=1.0\textwidth]{ciclo_de_juego}
-\caption[Ciclo de juego]{Esta figura muestra los diferentes hilos que corren en una escena de juego y a donde se envian los resultados de cada unos de ellos.}
+\caption[Ciclo de juego]{Esta figura muestra los diferentes hilos que corren en una escena de juego y a donde se envían los resultados de cada unos de ellos.}
 \label{fig:ciclo_de_juego}
 \end{figure}
 
@@ -176,7 +176,7 @@ Como cada hilo solo requiere de una referencia a los resultados de los objetos d
 
 La comunicación entre los diferentes hilos se logra con el uso de MVar, que son apuntadores especiales de haskell que tienen la propiedad de funcionar como semáforos, haciendo que los hilos solo puedan enviar información a otros una vez estos estén listos para recibirla. El uso de estas MVar causa, en la implementación actual, que todos los hilos se sincronicen al más lento.
 
-El módulo Val.Strict.Scene~\ref{Val.Strict.Scene} ademas aprovecha el echo de que el tipo IL implemente la clase Traversable, con esta clase se puede usar la librería Control.Parallel.Strategies de haskell para que el calculo de los diferentes objetos del juego se realice en forma concurrente manejado por el runtime environment de haskell, permitiendo que los cálculos realizados en el hilo lógico puedan realizare en más de un procesador. Para poder usar esta versión del hilo lógico, el usuario solo debe cambiar la llamada de la función initScene por la función initScenePar implementada en el mismo módulo.
+El módulo Val.Strict.Scene~\ref{Val.Strict.Scene} ademas aprovecha el hecho de que el tipo IL implemente la clase Traversable, con esta clase se puede usar la librería Control.Parallel.Strategies de haskell para que el calculo de los diferentes objetos del juego se realice en forma concurrente manejado por el runtime environment de haskell, permitiendo que los cálculos realizados en el hilo lógico puedan realizare en más de un procesador. Para poder usar esta versión del hilo lógico, el usuario solo debe cambiar la llamada de la función initScene por la función initScenePar implementada en el mismo módulo.
 
 \subsection{Utilidades}
 
