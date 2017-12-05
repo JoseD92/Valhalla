@@ -6,9 +6,11 @@
 
 \graphicspath{{implementacion/Figs/Vector/}{implementacion/Figs/}}
 
+Para el desarrollo de la aplicación se hará uso del lenguaje Haskell versión 8.0.2 y usando Cabal versión 1.24.2.0 como manejador de paquetes. Se escoge el lenguaje Haskell sobre otros lenguajes funcionales por la tendencia que tiene este lenguaje a acatar de forma más estricta las reglas conceptuales de la programación funcional.
+
 \section{Motor grafico}
 
-La librería de despliegue gráfico seleccionada para el proyecto es OpenGL, que es una librería que interactúa con el GPU para brindar despliegue grafico acelerado por hardware. OpenGL tiene la ventaja de ser multiplataforma e independiente del sistema de ventanas y del sistema operativo en que corra la aplicación, permitiendo así a nuestra aplicación ser fácilmente portable entre diferentes dispositivos.
+Este módulo debe contener las facilidades necesarias para el despliegue de gráficos en una ventana. La librería de despliegue gráfico seleccionada para el proyecto es OpenGL, que es una librería que interactúa con el GPU para brindar despliegue grafico acelerado por hardware. OpenGL tiene la ventaja de ser multiplataforma e independiente del sistema de ventanas y del sistema operativo en que corra la aplicación, permitiendo así a nuestra aplicación ser fácilmente portable entre diferentes dispositivos.
 
 \subsection{Manejador de ventana}
 
@@ -25,6 +27,8 @@ El siguiente paso es facilitar el uso de GLUT dentro del ciclo principal de ejec
 Para interactuar con la ventana y con GLUT el usuario puede usar cualquiera de las funciones de tipo GLUT () y las funciones initOpenGLEnvironment y initGL que sirven para inicializar.
 
 \subsection{Carga de recursos}
+
+Este módulo debe de proveer de herramientas para cargar recursos multimedia de formatos comunes. Esta sección tendrá un énfasis en imágenes y mallas poligonal que son los dos recursos multimedia con los cuales se puede hacer prototipos de juegos más rápidamente.
 
 \subsubsection{Mallado poligonal}
 
@@ -50,7 +54,7 @@ En el módulo EasyGL.Material~\ref{EasyGL.Material} define el tipo de dato Mater
 
 \subsection{Cámara}
 
-El módulo EasyGL.Camera~\ref{EasyGL.Camera} ofrece una abstracción de cámara fácil de usar, que oculta las dificultades de configurar la visión en OpenGL así como la manipulación de matrices de transformación que ellos implican.
+Se necesitan facilidades para el controlar los elementos a dibujar así como la perspectiva a usarse en los dibujos, este módulo debe ser capaz de utilizar los recursos cargados en otros módulos y producir imágenes en la ventana del juego. El módulo EasyGL.Camera~\ref{EasyGL.Camera} ofrece una abstracción de cámara fácil de usar, que oculta las dificultades de configurar la visión en OpenGL así como la manipulación de matrices de transformación que ellos implican.
 
 \subsection{Despliegue gráfico}
 
@@ -58,9 +62,7 @@ Para poder hacer uso de los mallados poligonales se debe primero cargar el malla
 
 En el módulo EasyGL.IndexedModel~\ref{EasyGL.IndexedModel} se implementa el tipo de dato IndexedModel que almacena la información del mayado en un formato para ser cargado al GPU, que implica tener la posición de los vértices, la coordenada de las texturas y las normales del objeto en arreglos diferentes y otro arreglo adicional que contiene índices indicativos al orden en que se usaran los datos de cada arreglo. Con este tipo de dato intermedio cualquier formato de archivo que se quiera cargar al entorno de OpenGL solo se requiere implementar código que transforme cualquier formato en un IndexedModel.
 
-Los archivos Obj guardan índices diferentes para de la posición de los vértices, la coordenada de las texturas y las normales del objeto, en cambio un IndexedModel posee un solo arreglo de índice para los tres, en el módulo EasyGL.Obj.Obj2IM~\ref{EasyGL.Obj.Obj2IM} se implementa la función toIndexedModel que reordena la información obtenida de un archivo Obj y retorna un IndexedModel para ser cargado al GPU.
-
-Para cargar y dibujar en pantalla un IndexedModel se usan las funciones implementadas en el modulo EasyGL.Entity~\ref{EasyGL.Entity}.
+Los archivos Obj guardan índices diferentes para de la posición de los vértices, la coordenada de las texturas y las normales del objeto, en cambio un IndexedModel posee un solo arreglo de índice para los tres, en el módulo EasyGL.Obj.Obj2IM~\ref{EasyGL.Obj.Obj2IM} se implementa la función toIndexedModel que reordena la información obtenida de un archivo Obj y retorna un IndexedModel para ser cargado al GPU. Para cargar y dibujar en pantalla un IndexedModel se usan las funciones implementadas en el modulo EasyGL.Entity~\ref{EasyGL.Entity}.
 
 
 %\subsection{Extras}
@@ -69,6 +71,8 @@ Para cargar y dibujar en pantalla un IndexedModel se usan las funciones implemen
 %\subsubsection{mem}
 
 \section{Motor lógico}
+
+Esta sección del programa se encargara de mantener y actualizar a los diferentes objetos del juego a medida que transcurre el tiempo. Este módulo debe de proveer al usuario las herramientas necesarias para implementar la lógica de su juego e inicializarlo al ser invocado. Para aprovechar las ventajas de la programación funcional la actualización de objetos debe de ejecutarse de una forma pura.
 
 Permitir que el usuario implemente la lógica de su juego es de vital importancia para todo motor de juego, y como ya se mencionó en la sección~\ref{sec:MTlogica}, los motores de juegos modernos emplean el patrón sistema entidad-componente, este patrón de diseño en su implementación depende en gran medida de la existencia de un estado mutable, la lógica creada por el usuario inevitablemente tiene que modificar componentes de una o más entidades para poder así generar cambios en el estado del juego. Sistemas implementados usando este patrón además requieren complejos sistemas para llevar a cabo la comunicación entre diversos subsistemas, y además, como muestra Jeff Andrews \cite{andrews2009designing}, la complejidad se hace mucho mayor cuando se quiere que estos sistemas corran de forma concurrente para hacer mejor use de procesadores modernos.
 
