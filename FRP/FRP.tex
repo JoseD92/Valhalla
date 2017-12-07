@@ -16,18 +16,18 @@ Las implementaciones más comunes de FRP para haskell  hacen uso de la notación
 
 En su más simple forma, FRP tiene dos abstracciones principales: Comportamientos, que cambian continuamente y Eventos que suceden en diferentes puntos en el tiempo. La continuidad del tiempo hace que estas abstracciones se puedan componer.
 
-\section{Yampa}
+\section{Lenguaje de especificaciones para sistemas híbridos\\ Yampa}
 
 Yampa es un lenguaje embebido para la programación de sistemas híbridos (tiempo discreto y continuo) utilizando los conceptos de Programación Reactiva Funcional (FRP). Yampa está estructurado con flechas, que reducen en gran medida la posibilidad de introducir fugas de espacio y tiempo en sistemas reactivos que varían en el tiempo \cite{wiki:Yampa}. Yampa es un sistema diseñado en base a una noción de muestreo y cambios dirigidos por eventos, es decir, la generación de un evento (como el presionar una tecla) causa la evaluación de valores y cambios en el estado actual del programa.
 
-\subsection{Señales.}
+\subsection{Señales}
 En FRP una señal puede representar cualquier valor mutable. Estas pueden ser transformadas y combinadas, que a diferencia de otras soluciones más tradiciones, permite abstraer varios detalles menores, permitiendo al programador lograr un mismo resultado usando menos código. En Yampa una señal es una función que retorna un valor según el tiempo transcurrido, dicho en otras palabras, es una función que dado un tiempo determinado regresa el valor adecuado para el objeto mutable en el momento indicado. Un ejemplo es la posición del ratón.
 
 \begin{equation}
 Signal \ \alpha \approx Time \rightarrow \alpha
 \end{equation}
 
-\subsection{Funciones de señal.}
+\subsection{Funciones de señal}
 Es una función que recibe una señal y produce otra señal. Estas funciones permiten alterar o generar nuevas señales dependiendo del estado actual de la señal original, por ejemplo, puede ser deseable generar una señal nueva cuando el ratón pasa por sobre algún elemento gráfico en específico.
 
 \begin{equation}
@@ -36,7 +36,7 @@ SF \ \alpha \ \beta \approx Signal \ \alpha \rightarrow Signal \ \beta
 
 Las funciones de señal son evaluadas de forma discreta a medida pasa el tiempo, al ser evaluadas retornan su valor de trabajo actual. Las SF pueden ser vistas como el comportamiento de un objeto, que cambia a medida que transcurre el tiempo.
 
-\subsection{Combinadores de funciones de señal.}
+\subsection{Combinadores de funciones de señal}
 
 Similar a la composición de funciones, las SF pueden ser compuestas para permitir un mejor filtrado de las señales. En Yampa los combinadores básicos son:
 
@@ -89,7 +89,7 @@ Los interruptores (Figura~\ref{fig:Yampa-switch}) son elementos que permiten que
 \label{fig:Yampa-switch}
 \end{figure}
 
-\subsection{Usando Yampa}
+\subsection{Ejemplo de uso de Yampa}
 
 Las funciones de señal se pueden crear y manipular a través de la interfaz de Arrow. Por ejemplo, una transformación pura (a -> b) se convierte en una función de señal simplemente con arr de la clase Arrow. Aquí hay una función de señal que eleva a dos los valores que pasan a través de ella:
 

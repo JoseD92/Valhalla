@@ -2,11 +2,12 @@
 
 \setcounter{secnumdepth}{4}
 
-\chapter{Implementacion}  %Title of the First Chapter
+\chapter{Implementación}  %Title of the First Chapter
+\label{capitulo4}
 
 \graphicspath{{implementacion/Figs/Vector/}{implementacion/Figs/}}
 
-Para el desarrollo de la aplicación se hará uso del lenguaje Haskell versión 8.0.2 y usando Cabal versión 1.24.2.0 como manejador de paquetes. Se escoge el lenguaje Haskell sobre otros lenguajes funcionales por la tendencia que tiene este lenguaje a acatar de forma más estricta los conceptos asociados a la programación funcional y por ser un lenguaje compilado, lo que permite un mayor desempeño a tiempo de ejecución.
+Para el desarrollo de la aplicación se hizo uso del lenguaje Haskell versión 8.0.2 y usando Cabal versión 1.24.2.0 como manejador de paquetes. Se escoge el lenguaje Haskell sobre otros lenguajes funcionales por la consistencia que tiene este lenguaje a acatar de forma más estricta los conceptos asociados a la programación funcional y por ser un lenguaje compilado, lo que permite un mayor desempeño a tiempo de ejecución.
 
 \section{Motor grafico}
 
@@ -166,9 +167,10 @@ SF
 
 La SF sceneSF recibe como entrada el estado de la ventana y entrada del usuario, el estado de los objetos en el frame anterior y eventos que deban ser enviados a objetos específicos, y retorna como resultado los objetos actualizados.
 
-Con sceneSF es posible ahora implementar el ciclo principal del juego, el módulo Val.Strict.Scene~\ref{Val.Strict.Scene} implementa la función initScene, que dado la información de los recursos a usar, una SF que controle una cámara y una colección inicial de objetos, carga todos los recursos al sistema e inicia el ciclo principal.
+Con sceneSF es posible ahora implementar el ciclo principal del juego, el módulo Val.Strict.Scene \ref{Val.Strict.Scene} implementa la función initScene, que dado la información de los recursos a usar, una SF que controle una cámara y una colección inicial de objetos, carga todos los recursos al sistema e inicia el ciclo principal.
 
-La función initScene inicia la escena del juego creando tres hilos de cómputo encargados de tareas específicas:
+La función initScene inicia la escena del juego creando tres hilos de cómputo encargados de tareas específicas, en la Figura~\ref{fig:ciclo_de_juego} se puede apreciar el flujo de los datos entre los hilos. Cada hilo esta e
+encargado de:
 
 \begin{itemize}
 \item Hilo 1, hilo lógico: Este hilo se caracteriza por actualizar la colección de objetos cada frame, este hilo inicia recibiendo la entrada del usuario del hilo 2 y el retorno de las funciones asíncronas generadas por los objetos manejados por el hilo 3. Con estos dos datos se actualizan los objetos en base al tiempo transcurrido y la salida de ellos es transmitida a los otros hilos.
@@ -176,7 +178,7 @@ La función initScene inicia la escena del juego creando tres hilos de cómputo 
 \item Hilo 3, hilo de E/S: Este hilo existe para que los objetos del juego puedan ejecutar funciones de E/S de manera asíncrona. Este hilo mantiene una lista de todas las funciones asíncronas en corrida. Este hilo inicia evaluando la culminación de alguna función y enviando los resultados al hilo 1, luego recibe la salida del hilo 1 y corre cualquier nueva función asíncrona que los objetos soliciten.
 \end{itemize}
 
-\begin{figure}[htbp!]
+\begin{figure}[!htbp!]
 \centering
 \includegraphics[width=1.0\textwidth]{ciclo_de_juego}
 \caption[Ciclo de juego]{Esta figura muestra los diferentes hilos que corren en una escena de juego y a donde se envían los resultados de cada unos de ellos.}

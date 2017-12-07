@@ -28,6 +28,8 @@ Funciones de orden superior son funciones que pueden tomar otras funciones como 
 
 Las funciones de orden superior permiten la aplicación parcial, una técnica en la que se aplica una función a sus argumentos uno a la vez, con cada aplicación devolver una nueva función que acepta el siguiente argumento. Esto le permite a uno expresar, por ejemplo, la función sucesor como el operador de suma aplicada parcialmente al número natural uno.
 
+Los ejemplos más comunes de este tipo de funciones son map, filter y fold, que son funciones que toman como argumento otras funciones.
+
 \subsection{Funciones puras}
 
 También denominadas expresiones, son funciones que no tienen ningún efecto secundario, como alterar memoria o realizar operaciones de entrada o salida (E/S). Esto significa que las funciones puras tienen varias propiedades útiles, muchas de las cuales pueden ser utilizadas para optimizar el código.
@@ -36,15 +38,17 @@ Si no se utiliza el resultado de una expresión pura, se puede eliminar sin afec
 
 Las funciones puras son especialmente útiles cuando se trabaja en proyectos conjuntos o colaborativos, ya que permite una metodología de desarrollo por caja negra, en donde el código desarrollado por una persona no se vea afectado por cambios en otras rutinas, disminuyendo errores y permitiendo la realización de pruebas aisladas de este tipo de funciones.
 
-\subsection{Evaluación perezosa}
+Algunos ejemplos de este tipo de función son las funciones aritméticas, como la suma y la resta, estas funciones siempre retornan el mismo valor para una misma entrada.
 
-La evaluación perezosa es un mecanismo de evaluación de llamada por necesidad que demora la evaluación de una expresión hasta que se necesite su valor. En los lenguajes funcionales, esto permite estructuras como listas infinitas, que normalmente no estarían disponibles en un lenguaje imperativo donde la secuencia de comandos es significativa.
+\subsection{Evaluación demorada (lazy evaluation)}
+
+La evaluación demorada, más comúnmente conocida como evaluación perezosa, es un mecanismo de evaluación de llamada por necesidad que demora la evaluación de una expresión hasta que se necesite su valor. En los lenguajes funcionales, esto permite estructuras como listas infinitas, que normalmente no estarían disponibles en un lenguaje imperativo donde la secuencia de comandos es significativa.
 
 Los argumentos a una función no se evalúan a menos que se utilicen realmente en la evaluación del cuerpo de la función. Ello ofrece un gran potencial para optimizaciones de parte de los compiladores y la posibilidad de evitar realizar ciertas operaciones.
 
-Los lenguajes de evaluación tardía permiten la definición de estructuras de datos infinitas, algo que es mucho más complicado en un lenguaje de evaluación estricta. Por ejemplo, considera una lista con los números de Fibonacci. Está claro que no podemos realizar cálculos sobre una lista infinita en un tiempo razonable, o guardarla en memoria. Como el lenguaje es de evaluación tardía, solo las partes necesarias de la lista que son usadas realmente por el programa serán evaluadas. Esto permite abstraer muchos problemas y verlos desde una persepectiva de más alto nivel.
+Los lenguajes de evaluación demorada permiten la definición de estructuras de datos infinitas, algo que es mucho más complicado en un lenguaje de evaluación estricta. Por ejemplo, considera una lista con los números de Fibonacci. Está claro que no podemos realizar cálculos sobre una lista infinita en un tiempo razonable, o guardarla en memoria. Como el lenguaje es de evaluación demorada, solo las partes necesarias de la lista que son usadas realmente por el programa serán evaluadas. Esto permite abstraer muchos problemas y verlos desde una persepectiva de más alto nivel.
 
-Adicionalmente, en combinación con funciones de orden superior, la evaluación perezosa permite un mayor nivel de modularización del código de los programas, haciéndolos más cortos y fáciles de escribir mejorando así la productividad \cite{hughes1989functional}.
+Adicionalmente, en combinación con funciones de orden superior, la evaluación demorada permite un mayor nivel de modularización del código de los programas, haciéndolos más cortos y fáciles de escribir mejorando así la productividad \cite{hughes1989functional}.
 
 \subsection{Sistemas de tipos}
 
