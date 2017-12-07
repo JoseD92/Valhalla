@@ -11,14 +11,22 @@
 
 El proyecto logró producir una herramienta que permite la creación de juegos en lenguaje Haskell. Para poder comprobar su funcionalidad y desempeño se hace uso de programas de ejemplo creados usando la herramienta.
 
-\section{Ejemplo motor gráfico}
+\section{Ejemplos del motor gráfico}
 
-Para la prueba del motor gráfico se creó un programa que dibuja en pantalla el armadillo de Stanford en color amarillo. Este programa no tiene ninguna clase de interacción. Se puede ver el programa en la sección de código Ejemplo1~\ref{Ejemplo1}, el código requerido para este programa es sencillo y corto gracias al motor.
+Para la prueba del motor gráfico se crearon varios programas de prueba con escenas diferentes donde se pudiese apreciar la funcionalidad del motor gráfico. Uno de los ejemplos más sencillos es un programa que dibuja en pantalla el armadillo de Stanford usando su normal como textura, ver Figura~\ref{fig:Ejemplo_1}. Este programa no tiene ninguna clase de interacción. Se puede ver el programa en la sección de código Ejemplo1~\ref{Ejemplo1}, el código requerido para este programa es sencillo y corto gracias al motor. Otro ejemplo, Figura~\ref{fig:Ejemplo_2}, muestra una escena más compleja usand el motor gráfico.
 
-\begin{figure}[htbp!]
+\begin{figure}[!ht!]
 \centering
-\includegraphics[width=1.0\textwidth]{sceenshot1}
-\caption[Ejemplo 1]{El armadillo de Stanford dibujado en color amarillo.}
+\includegraphics[width=0.6\textwidth]{armadillo}
+\caption[Ejemplo 1]{El armadillo de Stanford dibujado usando su normal como color.}
+\label{fig:Ejemplo_1}
+\end{figure}
+
+\begin{figure}[!ht!]
+\centering
+\includegraphics[width=0.6\textwidth]{link}
+\caption[Ejemplo 2]{Una escena mas compleja usando el motor gráfico.}
+\label{fig:Ejemplo_2}
 \end{figure}
 
 \section{Ejemplo motor de juego}
@@ -51,18 +59,21 @@ En los casos con pocas entidades, la caída en FPS puede atribuirse al costo inc
 
 Este ejemplo muestra que el uso de hilos en el motor provee de mayor rendimiento a los juegos creados sin aumentar la complejidad del motor. Es recomendable para cualquier funcionalidad adicional que se agregue al motor, el implementarse un hilo separado que solo dependa del estado del juego.
 
-\begin{figure}[htbp!]
+\begin{figure}[!ht!]
 \centering
-\includegraphics[width=1.0\textwidth]{sceenshot2}
-\caption[Ejemplo 2]{200 esferas.}
+\includegraphics[width=0.8\textwidth]{sceenshot2}
+\caption[Ejemplo 3]{200 esferas.}
+\label{fig:Ejemplo_3}
 \end{figure}
 
-\section{Sobre GLUT y OpenGL}
+Otros ejemplos fueron creados para probar el motor de juego, algunos de esos ejemplos usan algoritmos de inteligencia artificial para tener entidades capaces de interactuar con el jugador y donde el jugador puede controlar una entidad, otro ejemplo permite simplemente navegar por un espacio virtual. Sin embargo ya que el rendimiento observado en los otros ejemplos es similar al Ejemplo2~\ref{Ejemplo2} y que el código de estos ejemplos es considerablemente largo, no se hace mención detallada de estos otros ejemplos.
 
-El uso de monads para expresar las operaciones relativas a GLUT resulta como una manera más cómoda y segura para interactuar con la librería según la experiencia adquirida en el uso del monad. Esta experiencia es consistente con un caso similar en el cual Facebook uso monads y Aplicative (clase de haskell) para expresar cómputos paralelos en sus reglas de filtrado de spam, que gracias a la notación de monad de haskell hace el código más limpio y seguro \cite{marlow2014there} \cite{Facebook:Fighting} \cite{Facebook:sourcing}.
+%\section{Sobre GLUT y OpenGL}
 
-De la misma forma en la que se logró crear un monad para GLUT,  debe ser posible crear uno similar para OpenGL, que al igual que GLUT comparte muchas similitudes en funcionamiento. Actualmente, la implementación actual no monádica de OpenGL fuerza a que todas las llamadas a funciones de OpenGL deban realizarse en monad IO, lo cual es considerado peligroso ya que cualquier tipo de código puede ser ejecutado en dicho entorno, y al OpenGL tener que correr en IO, es necesario tener que incluir al monad GLUT en la clase MonadIO (que permite a cualquier monad correr IO) para poder correr código OpenGL en el ciclo de ejecución de GLUT, arruinando en cierta medida la idea de seguridad que se esperaba para el monad GLUT.
+%El uso de monads para expresar las operaciones relativas a GLUT resulta como una manera más cómoda y segura para interactuar con la librería según la experiencia adquirida en el uso del monad. Esta experiencia es consistente con un caso similar en el cual Facebook uso monads y Aplicative (clase de haskell) para expresar cómputos paralelos en sus reglas de filtrado de spam, que gracias a la notación de monad de haskell hace el código más limpio y seguro \cite{marlow2014there} \cite{Facebook:Fighting} \cite{Facebook:sourcing}.
 
-De poder implementarse un monad para OpenGL, se podría eliminar toda posibilidad de hacer IO en las secciones de código que pertenezcan a GLUT y a OpenGL, lo cual, si bien puede parecer restrictivo, ayudaría a que el monad garantice consistencia en los contextos de ambas librerías \cite{hughes2000generalising}.
+%De la misma forma en la que se logró crear un monad para GLUT,  debe ser posible crear uno similar para OpenGL, que al igual que GLUT comparte muchas similitudes en funcionamiento. Actualmente, la implementación actual no monádica de OpenGL fuerza a que todas las llamadas a funciones de OpenGL deban realizarse en monad IO, lo cual es considerado peligroso ya que cualquier tipo de código puede ser ejecutado en dicho entorno, y al OpenGL tener que correr en IO, es necesario tener que incluir al monad GLUT en la clase MonadIO (que permite a cualquier monad correr IO) para poder correr código OpenGL en el ciclo de ejecución de GLUT, arruinando en cierta medida la idea de seguridad que se esperaba para el monad GLUT.
 
-La razón principal por la cual un monad no fue implementado para OpenGL es, primero, la librería OpenGL es proporcionalmente más grande y compleja que GLUT. Segundo, en OpenGL se pueden crear objetos únicos de esta librería (ejemplo: VOBs) y su administración y almacenamiento es un tema de discusión, ya que de ser dejado al usuario se rompe la idea de que un monad OpenGL maneje todo el contexto de OpenGL, y dejado como responsabilidad de un posible monad, es difícil dar con una interfaz que resulte cómoda y llamativa para el usuario.
+%De poder implementarse un monad para OpenGL, se podría eliminar toda posibilidad de hacer IO en las secciones de código que pertenezcan a GLUT y a OpenGL, lo cual, si bien puede parecer restrictivo, ayudaría a que el monad garantice consistencia en los contextos de ambas librerías \cite{hughes2000generalising}.
+
+%La razón principal por la cual un monad no fue implementado para OpenGL es, primero, la librería OpenGL es proporcionalmente más grande y compleja que GLUT. Segundo, en OpenGL se pueden crear objetos únicos de esta librería (ejemplo: VOBs) y su administración y almacenamiento es un tema de discusión, ya que de ser dejado al usuario se rompe la idea de que un monad OpenGL maneje todo el contexto de OpenGL, y dejado como responsabilidad de un posible monad, es difícil dar con una interfaz que resulte cómoda y llamativa para el usuario.
