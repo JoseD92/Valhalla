@@ -24,7 +24,7 @@ En la programación funcional, los programas se ejecutan evaluando expresiones, 
 
 \subsection{Funciones de primera clase y de orden superior}
 
-Funciones de orden superior son funciones que pueden tomar otras funciones como argumentos o devolverlos como resultados. Las funciones de orden superior están estrechamente relacionadas con las funciones de primera clase, en las cuales las funciones de orden superior y las funciones de primera clase pueden recibir como argumentos y generar como resultados otras funciones. Las funciones de orden superior describen un concepto matemático de funciones que operan sobre otras funciones, mientras que las funciones de primera clase son un término informático que describe las entidades del lenguaje de programación que no tienen ninguna restricción de su utilización.
+Funciones de orden superior son funciones que pueden tomar otras funciones como argumentos o devolverlos como resultados. Las funciones de orden superior están estrechamente relacionadas con las funciones de primera clase, en las cuales las funciones de orden superior y las funciones de primera clase pueden recibir como argumentos y generar como resultados otras funciones. Las funciones de orden superior describen un concepto matemático de funciones que operan sobre otras funciones, mientras que las funciones de primera clase son un término informático que describe las entidades del lenguaje de programación que no tienen ninguna restricción de su utilización  \cite{wiki:FunctionalProgramming}.
 
 Las funciones de orden superior permiten la aplicación parcial, una técnica en la que se aplica una función a sus argumentos uno a la vez, con cada aplicación devolver una nueva función que acepta el siguiente argumento. Esto le permite a uno expresar, por ejemplo, la función sucesor como el operador de suma aplicada parcialmente al número natural uno.
 
@@ -32,7 +32,7 @@ Los ejemplos más comunes de este tipo de funciones son map, filter y fold, que 
 
 \subsection{Funciones puras}
 
-También denominadas expresiones, son funciones que no tienen ningún efecto secundario, como alterar memoria o realizar operaciones de entrada o salida (E/S). Esto significa que las funciones puras tienen varias propiedades útiles, muchas de las cuales pueden ser utilizadas para optimizar el código.
+También denominadas expresiones, son funciones que no tienen ningún efecto secundario, como alterar memoria o realizar operaciones de entrada o salida (E/S). Esto significa que las funciones puras tienen varias propiedades útiles, muchas de las cuales pueden ser utilizadas para optimizar el código \cite{wiki:FunctionalProgramming}.
 
 Si no se utiliza el resultado de una expresión pura, se puede eliminar sin afectar a otras expresiones. El resultado es constante con respecto a la lista de parámetros, es decir, si la función pura se llama de nuevo con los mismos parámetros, el mismo resultado será devuelto, esto puede habilitar las optimizaciones de almacenamiento en caché. Si no hay una dependencia de datos entre dos expresiones puras, entonces su orden puede ser invertido, o pueden llevarse a cabo en paralelo.
 
@@ -42,7 +42,7 @@ Algunos ejemplos de este tipo de función son las funciones aritméticas, como l
 
 \subsection{Evaluación demorada (lazy evaluation)}
 
-La evaluación demorada, más comúnmente conocida como evaluación perezosa, es un mecanismo de evaluación de llamada por necesidad que demora la evaluación de una expresión hasta que se necesite su valor. En los lenguajes funcionales, esto permite estructuras como listas infinitas, que normalmente no estarían disponibles en un lenguaje imperativo donde la secuencia de comandos es significativa.
+La evaluación demorada, más comúnmente conocida como evaluación perezosa, es un mecanismo de evaluación de llamada por necesidad que demora la evaluación de una expresión hasta que se necesite su valor. En los lenguajes funcionales, esto permite estructuras como listas infinitas, que normalmente no estarían disponibles en un lenguaje imperativo donde la secuencia de comandos es significativa  \cite{wiki:FunctionalProgramming}.
 
 Los argumentos a una función no se evalúan a menos que se utilicen realmente en la evaluación del cuerpo de la función. Ello ofrece un gran potencial para optimizaciones de parte de los compiladores y la posibilidad de evitar realizar ciertas operaciones.
 
@@ -52,4 +52,4 @@ Adicionalmente, en combinación con funciones de orden superior, la evaluación 
 
 \subsection{Sistemas de tipos}
 
-El uso de tipos de datos algebraicos y la coincidencia de patrones hace que la manipulación de estructuras de datos complejas convenientes y expresivos, la presencia de comprobaciones estrictas de tipos en tiempo de compilación hace que los programas sean más fiables, mientras que la inferencia de tipos libera al programador de la necesidad de declarar manualmente los tipos para el compilador al momento de declarar funciones u otras expresiones.
+El uso de tipos de datos algebraicos y la coincidencia de patrones hace que la manipulación de estructuras de datos complejas convenientes y expresivos, la presencia de comprobaciones estrictas de tipos en tiempo de compilación hace que los programas sean más fiables, mientras que la inferencia de tipos libera al programador de la necesidad de declarar manualmente los tipos para el compilador al momento de declarar funciones u otras expresiones \cite{wiki:FunctionalProgramming}.

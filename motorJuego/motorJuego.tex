@@ -20,7 +20,7 @@ Por último, y no menos importante, el motor de juego debe de hacerse cargo de a
 
 \subsection{Programa principal} \label{sec:MTlogica}
 
-La lógica del juego a crear debe de ser implementada en algún algoritmo, de forma independiente del audio u otro componente. Los motores modernos de juego usan un patrón conocido como sistema entidad-componente (ECS) en donde una entidad consiste en uno o más componentes y todos los objetos en el juego son una entidad.
+La lógica del juego a crear debe de ser implementada en algún algoritmo, de forma independiente del audio u otro componente. Los motores modernos de juego usan un patrón conocido como sistema entidad-componente (ECS) en donde una entidad consiste en uno o más componentes y todos los objetos en el juego son una entidad \cite{JasonGregory-GameEngineArchitecture}.
 
 Una entidad es un objeto de propósito general, y suele consistir de no más que un identificador único que lo diferencia a la entidad de otras. Los componentes son el conjunto de información requerida para el funcionamiento de un aspecto del objeto y su interacción con el mundo. Finalmente cada sistema corre de manera continua e interactúa con cada entidad de posea el componente correspondiente.
 
@@ -44,8 +44,10 @@ Un motor de física es un software que proporciona una simulación aproximada de
 
 En general, hay dos clases de motores de física: en tiempo real y de alta precisión. Los motores de física de alta precisión requieren más potencia de procesamiento para calcular la física de mayor precisión y, por lo general, se utilizan para fines científicos y en películas animadas por computadora. Los motores de física en tiempo real usan cálculos simplificados y precisión disminuida para dar una respuesta en tiempo real, y son usados en videojuegos y otros medios de computación interactiva.
 
-En la mayoría de los juegos de computadora, la velocidad de los juegos son más importantes que la precisión de la simulación. Esto conduce a diseños para motores de física que producen resultados en tiempo real pero que replican la física del mundo real solo para casos simples y típicamente con alguna aproximación. Los motores de física para videojuegos generalmente tienen dos componentes principales, un sistema de detección y respuesta a colisiones y el componente de simulación dinámica responsable de resolver las fuerzas que afectan a los objetos simulados.
+En la mayoría de los juegos de computadora, la velocidad de los juegos son más importantes que la precisión de la simulación. Esto conduce a diseños para motores de física que producen resultados en tiempo real pero que replican la física del mundo real solo para casos simples y típicamente con alguna aproximación. Los motores de física para videojuegos generalmente tienen dos componentes principales, un sistema de detección y respuesta a colisiones y el componente de simulación dinámica responsable de resolver las fuerzas que afectan a los objetos simulados \cite{JasonGregory-GameEngineArchitecture}.
 
 \subsection{Inteligencia artificial}
 
-La inteligencia artificial generalmente se implementa fuera del programa principal en un módulo especial diseñado y escrito por ingenieros de software con conocimientos especializados.
+La inteligencia artificial se usa para generar comportamientos sensibles, adaptativos e inteligentes principalmente en personajes de juego (NPC), a manera de simular a la inteligencia humana y proporcionar a los jugadores un mejor entretenimiento. Dado que la inteligencia artificial para juegos se centra en aparentar un comportamiento inteligente, su enfoque es muy diferente a la inteligencia artificial tradicional \cite{millington2016artificial}.
+
+Debido a la complejidad involucrada en estos algoritmos y la necesidad de hacer que estos provean resultados en tiempo real a medida que el jugador interactúa con los elementos del juego, y dado también el hecho que la mayoría de los juegos suelen tener los mismos o similares requerimientos en cuanto inteligencia artificial, los motores de juego modernos proveen un conjunto de estos algoritmos optimizados para ciertas circunstancias, además de permitir a estos algoritmos correr en forma paralela dentro del motor cuando su resultado no se requiere en forma urgente y poder interrumpirlo cuando se requiera realizar una tarea más importante.

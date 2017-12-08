@@ -9,33 +9,34 @@
     \graphicspath{{resultados/Figs/Vector/}{resultados/Figs/}}
 \fi
 
-El proyecto logró producir una herramienta que permite la creación de juegos en lenguaje Haskell. Para poder comprobar su funcionalidad y desempeño se hace uso de programas de ejemplo creados usando la herramienta.
+El proyecto logró producir una herramienta que permite la creación de juegos en lenguaje \emph{Haskell}. Para poder comprobar su funcionalidad y desempeño se hace uso de programas de ejemplo creados usando la herramienta.
 
 \section{Ejemplos del motor gráfico}
 
-Para la prueba del motor gráfico se crearon varios programas de prueba con escenas diferentes donde se pudiese apreciar la funcionalidad del motor gráfico. Uno de los ejemplos más sencillos es un programa que dibuja en pantalla el armadillo de Stanford usando su normal como textura, ver Figura~\ref{fig:Ejemplo_1}. Este programa no tiene ninguna clase de interacción. Se puede ver el programa en la sección de código Ejemplo1~\ref{Ejemplo1}, el código requerido para este programa es sencillo y corto gracias al motor. Otro ejemplo, Figura~\ref{fig:Ejemplo_2}, muestra una escena más compleja usand el motor gráfico.
+Para la prueba del motor gráfico se crearon varios programas de prueba con escenas diferentes donde se pudiese apreciar la funcionalidad del motor gráfico. Uno de los ejemplos más sencillos es un programa que dibuja en pantalla el armadillo de Stanford usando su normal como textura, ver \emph{Figura~\ref{fig:Ejemplo_1}}. Este programa no tiene ninguna clase de interacción. Se puede ver el programa en la sección de código \emph{Ejemplo1~\ref{Ejemplo1}}, el código requerido para este programa es sencillo y corto gracias al motor. Otro ejemplo, \emph{Figura~\ref{fig:Ejemplo_2}}, muestra una escena más compleja usand el motor gráfico.
 
 \begin{figure}[!ht!]
 \centering
 \includegraphics[width=0.6\textwidth]{armadillo}
-\caption[Ejemplo 1]{El armadillo de Stanford dibujado usando su normal como color.}
+\caption[Ejemplo 1 - Escena simple del motor de gráfico]{El armadillo de Stanford dibujado usando su normal como color.}
 \label{fig:Ejemplo_1}
 \end{figure}
 
 \begin{figure}[!ht!]
 \centering
 \includegraphics[width=0.6\textwidth]{link}
-\caption[Ejemplo 2]{Una escena mas compleja usando el motor gráfico.}
+\caption[Ejemplo 2 - Escena más compleja del motor de gráfico]{Una escena mas compleja usando el motor gráfico.}
 \label{fig:Ejemplo_2}
 \end{figure}
 
 \section{Ejemplo motor de juego}
 
-El motor de juego se prueba mediante un programa que crea un número de esferas que se mueven en alguna dirección e invierten la dirección en la que se mueven cuando colisionan con otra esfera o llegan al límite de un área predefinida. Este ejemplo se puede encontrar en la sección de código Ejemplo2~\ref{Ejemplo2}.
+El motor de juego se prueba mediante un programa que crea un número de esferas que se mueven en alguna dirección e invierten la dirección en la que se mueven cuando colisionan con otra esfera o llegan al límite de un área predefinida. Este ejemplo se puede encontrar en la sección de código \emph{Ejemplo2~\ref{Ejemplo2}}.
 
-Para este ejemplo se observa los FPS (frames per second) del programa con diferente cantidad de esferas y permitiendo al RTE de haskell correr con una cantidad diferente de hilos máximos. Esta prueba permitirá observar el rendimiento y el uso de paralelismo del motor de juego en diversas situaciones.
+Para este ejemplo se observa los FPS (frames per second) del programa con diferente cantidad de esferas y permitiendo al RTE de \emph{Haskell} correr con una cantidad diferente de hilos máximos. Esta prueba permitirá observar el rendimiento y el uso de paralelismo del motor de juego en diversas situaciones.
 
 \begin{table}
+  \centering
 \begin{tabular}{ | l | c | c | c | c | }
  \hline
  FPS & 1 hilo &2 hilos&3 hilos&4 hilos\\
@@ -53,20 +54,20 @@ Para este ejemplo se observa los FPS (frames per second) del programa con difere
 \label{table:Ejemplo2}
 \end{table}
 
-En la tabla~\ref{table:Ejemplo2} se observa, como era de esperarse, una disminución de los FPS a medida que se aumenta el número de entidades en la escena. Pero gracias al uso de paralelismo del motor, el uso de hilos adicionales permite aumentar el número de FPS por cantidad de entidades. Los datos muestran que el programa corre a mayor velocidad cuando se utilizan tres hilos de cómputo, en especial en los casos con pocas entidades.
+En la \emph{Tabla~\ref{table:Ejemplo2}} se observa, como era de esperarse, una disminución de los FPS a medida que se aumenta el número de entidades en la escena. Pero gracias al uso de paralelismo del motor, el uso de hilos adicionales permite aumentar el número de FPS por cantidad de entidades. Los datos muestran que el programa corre a mayor velocidad cuando se utilizan tres hilos de cómputo, en especial en los casos con pocas entidades.
 
-En los casos con pocas entidades, la caída en FPS puede atribuirse al costo incurrido en crear y destruir hilos siendo mayor a la ganancia de procesar las entidades en hilos separados. Sin embargo, cuando se aumenta el número de entidades, los FPS con tres y cuatro hilos se hacen iguales en lugar de aumentar, en la sección ~\ref{sec:Escenas} se establece que el hilo lógico usa la librería Control.Parallel.Strategies para realizar la actualización de las entidades en paralelo, el motor de juego posee, en la implementación actual, tres hilos que siempre se encuentran activos, cualquier otro hilo es creado en base a demanda. Ello significa que al usar tres hilos el RTE de Haskell corra la actualización de las entidades en el hilo asignado al hilo lógico, pero al haber cuatro, el RTE puede estar incurriendo en un problema en el que administrar que tareas asignar a este hilo disponible sea más caro que la tarea siendo asignada al hilo. La otra posible causa de no aprovecharse el cuarto hilo yace en que la estrategia usada de la librería Control.Parallel.Strategies no esté llevando los objetos a forma normal, en haskell eso significa que un cómputo este totalmente computado y no sea una promesa, que podría ser resuelto cambiando de estrategia e implementando la clase NFData para el tipo de dato ObjOutput.
+En los casos con pocas entidades, la caída en FPS puede atribuirse al costo incurrido en crear y destruir hilos siendo mayor a la ganancia de procesar las entidades en hilos separados. Sin embargo, cuando se aumenta el número de entidades, los FPS con tres y cuatro hilos se hacen iguales en lugar de aumentar, en la \emph{Sección ~\ref{sec:Escenas}} se establece que el hilo lógico usa la librería Control.Parallel.Strategies para realizar la actualización de las entidades en paralelo, el motor de juego posee, en la implementación actual, tres hilos que siempre se encuentran activos, cualquier otro hilo es creado en base a demanda. Ello significa que al usar tres hilos el RTE de \emph{Haskell} corra la actualización de las entidades en el hilo asignado al hilo lógico, pero al haber cuatro, el RTE puede estar incurriendo en un problema en el que administrar que tareas asignar a este hilo disponible sea más caro que la tarea siendo asignada al hilo. La otra posible causa de no aprovecharse el cuarto hilo yace en que la estrategia usada de la librería Control.Parallel.Strategies no esté llevando los objetos a forma normal, en \emph{Haskell} eso significa que un cómputo este totalmente computado y no sea una promesa, que podría ser resuelto cambiando de estrategia e implementando la clase NFData para el tipo de dato ObjOutput.
 
 Este ejemplo muestra que el uso de hilos en el motor provee de mayor rendimiento a los juegos creados sin aumentar la complejidad del motor. Es recomendable para cualquier funcionalidad adicional que se agregue al motor, el implementarse un hilo separado que solo dependa del estado del juego.
 
 \begin{figure}[!ht!]
 \centering
 \includegraphics[width=0.8\textwidth]{sceenshot2}
-\caption[Ejemplo 3]{200 esferas.}
+\caption[Ejemplo 3 - Escena del motor de juego]{200 esferas.}
 \label{fig:Ejemplo_3}
 \end{figure}
 
-Otros ejemplos fueron creados para probar el motor de juego, algunos de esos ejemplos usan algoritmos de inteligencia artificial para tener entidades capaces de interactuar con el jugador y donde el jugador puede controlar una entidad, otro ejemplo permite simplemente navegar por un espacio virtual. Sin embargo ya que el rendimiento observado en los otros ejemplos es similar al Ejemplo2~\ref{Ejemplo2} y que el código de estos ejemplos es considerablemente largo, no se hace mención detallada de estos otros ejemplos.
+Otros ejemplos fueron creados para probar el motor de juego, algunos de esos ejemplos usan algoritmos de inteligencia artificial para tener entidades capaces de interactuar con el jugador y donde el jugador puede controlar una entidad, otro ejemplo permite simplemente navegar por un espacio virtual. Sin embargo ya que el rendimiento observado en los otros ejemplos es similar al \emph{Ejemplo2~\ref{Ejemplo2}} y que el código de estos ejemplos es considerablemente largo, no se hace mención detallada de estos otros ejemplos.
 
 %\section{Sobre GLUT y OpenGL}
 
