@@ -10,18 +10,18 @@
 
 La programación reactiva funcional (FRP, por sus siglas en inglés) es un enfoque elegante para especificar de forma declarativa los sistemas reactivos, que son sistemas orientados en la propagación de cambios de múltiples entidades.
 
-FRP integra la idea de flujo de tiempo y composición de eventos en la programación puramente funcional. Al manejar el flujo de tiempo de manera uniforme y generalizada, una aplicación obtiene claridad y fiabilidad. Así como la evaluación perezosa puede eliminar la necesidad de estructuras de control complejas, una noción uniforme de flujo de tiempo soporta un estilo de programación más declarativo que oculta un complejo mecanismo subyacente. Esto proporciona una manera elegante de expresar la computación en dominios como animaciones interactivas \cite{eh97:fran}, robótica \cite{Pembeci:2002:FRR:571157.571174}, visión por computadora, interfaces de usuario \cite{czaplicki2012elm} y simulación.
+\emph{FRP} integra la idea de flujo de tiempo y composición de eventos en la programación puramente funcional. Al manejar el flujo de tiempo de manera uniforme y generalizada, una aplicación obtiene claridad y fiabilidad. Así como la evaluación perezosa puede eliminar la necesidad de estructuras de control complejas, una noción uniforme de flujo de tiempo soporta un estilo de programación más declarativo que oculta un complejo mecanismo subyacente. Esto proporciona una manera elegante de expresar la computación en dominios como animaciones interactivas \cite{eh97:fran}, robótica \cite{Pembeci:2002:FRR:571157.571174}, visión por computadora, interfaces de usuario \cite{czaplicki2012elm} y simulación.
 
-Las implementaciones más comunes de FRP para \emph{Haskell}  hacen uso de la notación de flechas, que son una nueva manera abstracta de visualizar los cómputos, creada por John Hughes \cite{hughes2000generalising}. Las flechas, al igual que los monads, proveen una estructura común para la implementación de librerías siendo más generales que los monads. John Hughes demostró que existen tipos de datos que no se adaptan bien a la estructura de monads causando así fugas de memoria indeseadas, que con flechas pueden ser resueltas en lenguajes funciones como \emph{Haskell} \cite{hughes2000generalising}. Adicionalmente las librerías de FRP en \emph{Haskell} usan una extensión del lenguaje propuesta por Ross  Paterson \cite{paterson2001new} que hace el uso de flechas mucho más fácil y conveniente que la versión original creada por Hughes. Para más detalles de la evolución de FRP leer ``Elm: Concurrent FRP for Functional GUIs'' \cite{czaplicki2012elm} capítulo 2.1.
+Las implementaciones más comunes de \emph{FRP} para \emph{Haskell}  hacen uso de la notación de flechas, que son una nueva manera abstracta de visualizar los cómputos, creada por John Hughes \cite{hughes2000generalising}. Las flechas, al igual que los monads, proveen una estructura común para la implementación de librerías siendo más generales que los monads. John Hughes demostró que existen tipos de datos que no se adaptan bien a la estructura de monads causando así fugas de memoria indeseadas, que con flechas pueden ser resueltas en lenguajes funciones como \emph{Haskell} \cite{hughes2000generalising}. Adicionalmente las librerías de \emph{FRP} en \emph{Haskell} usan una extensión del lenguaje propuesta por Ross  Paterson \cite{paterson2001new} que hace el uso de flechas mucho más fácil y conveniente que la versión original creada por Hughes. Para más detalles de la evolución de \emph{FRP} leer ``Elm: Concurrent FRP for Functional GUIs'' \cite{czaplicki2012elm} capítulo 2.1.
 
-En su más simple forma, FRP tiene dos abstracciones principales: Comportamientos, que cambian continuamente y Eventos que suceden en diferentes puntos en el tiempo. La continuidad del tiempo hace que estas abstracciones se puedan componer.
+En su más simple forma, \emph{FRP} tiene dos abstracciones principales: Comportamientos, que cambian continuamente y Eventos que suceden en diferentes puntos en el tiempo. La continuidad del tiempo hace que estas abstracciones se puedan componer.
 
 \section{Lenguaje de especificaciones para sistemas híbridos\\ Yampa}
 
-Yampa es un lenguaje embebido para la programación de sistemas híbridos (tiempo discreto y continuo) utilizando los conceptos de Programación Reactiva Funcional (FRP). Yampa está estructurado con flechas, que reducen en gran medida la posibilidad de introducir fugas de espacio y tiempo en sistemas reactivos que varían en el tiempo \cite{wiki:Yampa}. Yampa es un sistema diseñado en base a una noción de muestreo y cambios dirigidos por eventos, es decir, la generación de un evento (como el presionar una tecla) causa la evaluación de valores y cambios en el estado actual del programa.
+\emph{Yampa} es un lenguaje embebido para la programación de sistemas híbridos (tiempo discreto y continuo) utilizando los conceptos de Programación Reactiva Funcional (FRP). \emph{Yampa} está estructurado con flechas, que reducen en gran medida la posibilidad de introducir fugas de espacio y tiempo en sistemas reactivos que varían en el tiempo \cite{wiki:Yampa}. \emph{Yampa} es un sistema diseñado en base a una noción de muestreo y cambios dirigidos por eventos, es decir, la generación de un evento (como el presionar una tecla) causa la evaluación de valores y cambios en el estado actual del programa.
 
 \subsection{Señales}
-En FRP una señal puede representar cualquier valor mutable. Estas pueden ser transformadas y combinadas, que a diferencia de otras soluciones más tradiciones, permite abstraer varios detalles menores, permitiendo al programador lograr un mismo resultado usando menos código. En Yampa una señal es una función que retorna un valor según el tiempo transcurrido, dicho en otras palabras, es una función que dado un tiempo determinado regresa el valor adecuado para el objeto mutable en el momento indicado. Un ejemplo es la posición del ratón \cite{wiki:Yampa} \cite{Courtney2003b}.
+En \emph{FRP} una señal puede representar cualquier valor mutable. Estas pueden ser transformadas y combinadas, que a diferencia de otras soluciones más tradiciones, permite abstraer varios detalles menores, permitiendo al programador lograr un mismo resultado usando menos código. En \emph{Yampa} una señal es una función que retorna un valor según el tiempo transcurrido, dicho en otras palabras, es una función que dado un tiempo determinado regresa el valor adecuado para el objeto mutable en el momento indicado. Un ejemplo es la posición del ratón \cite{wiki:Yampa} \cite{Courtney2003b}.
 
 \begin{equation}
 Signal \ \alpha \approx Time \rightarrow \alpha
@@ -38,7 +38,7 @@ Las funciones de señal son evaluadas de forma discreta a medida pasa el tiempo,
 
 \subsection{Combinadores de funciones de señal}
 
-Similar a la composición de funciones, las SF pueden ser compuestas para permitir un mejor filtrado de las señales. En Yampa los combinadores básicos son:
+Similar a la composición de funciones, las SF pueden ser compuestas para permitir un mejor filtrado de las señales. En \emph{Yampa} los combinadores básicos son:
 
 \begin{itemize}
 \item arr: crea un SF a partir de una función \emph{Figura~\ref{fig:Yampa-arr}}.
@@ -76,7 +76,7 @@ Similar a la composición de funciones, las SF pueden ser compuestas para permit
 \label{fig:Yampa-loop}
 \end{figure}
 
-Partiendo de estos combinadores se pueden derivar todos los combinadores más complejos usados por la librería Yampa.
+Partiendo de estos combinadores se pueden derivar todos los combinadores más complejos usados por la librería \emph{Yampa}.
 
 \subsection{Interruptores}
 
@@ -154,4 +154,4 @@ La función dSwitch es idéntica a switch, excepto que, en el momento del evento
 ["foo","foo","bar"]
 \end{lstlisting}
 
-Ejemplos mostrados en esta sección fueron creados por Samuli Thomasson, si el lector quiere profundizar en el uso de Yampa leer ``Haskell High Performance Programming'' \cite{thomasson2016haskell} capítulo 13.
+Ejemplos mostrados en esta sección fueron creados por Samuli Thomasson, si el lector quiere profundizar en el uso de \emph{Yampa} leer ``Haskell High Performance Programming'' \cite{thomasson2016haskell} capítulo 13.
