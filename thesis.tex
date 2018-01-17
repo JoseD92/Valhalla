@@ -1,7 +1,7 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[letterpaper,12pt,times,numbered,print,index,PageStyleI]{Classes/PhDThesisPSnPDF}
+\documentclass[letterpaper,12pt,times,oneside,numbered,print,index,custommargin,PageStyleI]{Classes/PhDThesisPSnPDF}
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -121,7 +121,44 @@ keywordstyle =\color{black}\bfseries, % underlined bold black keywords  basicsty
 
 \frontmatter
 
-\maketitle
+\graphicspath{{Figs/}}
+\begin{titlepage}
+
+\begin{figure}[!htbp!]
+\centering
+\includegraphics[width=0.2\textwidth]{University_Crest}
+\end{figure}
+
+\begin{center}
+
+\Large UNIVERSIDAD SIMÓN BOLÍVAR\\
+\large \textbf {DECANATO DE ESTUDIOS PROFESIONALES}\\
+\large \textbf {COORDINACIÓN DE INGENIERÍA DE LA COMPUTACIÓN}\\
+
+\vfill
+\large \textbf {IMPLEMENTACIÓN DE UN MOTOR DE JUEGO EN LENGUAJES PURAMENTE FUNCIONALES}
+
+\vfill
+Por:\\
+José Daniel Duran Toro
+
+\vfill
+Realizado con la asesoría de:\\
+Victor Theoktisto
+
+\vfill
+\large PROYECTO DE GRADO\\
+Presentado ante la Ilustre Universidad Simón Bolívar\\
+como requisito parcial para optar al título de\\
+Ingeniero de la Computación
+
+\vfill
+\textbf {Sartenejas, Enero 2018}
+
+
+\end{center}
+
+\end{titlepage}
 
 % *********** To change the name of Table of Contents / LOF and LOT ************
 

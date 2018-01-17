@@ -73,7 +73,7 @@ Para poder hacer uso de los mallados poligonales se debe primero cargar la infor
 
 Ya que la información que se almacena en VAO's y en VBO's se ordena en forma diferente a la información almacenada en los archivos Obj, se implementó en el módulo \emph{EasyGL.IndexedModel~\ref{EasyGL.IndexedModel}} el tipo de dato IndexedModel, que almacena la información de un mallado (vertices, coordenadas de texturas y normales) en el orden y formato que se requiere para crear VAO's y VBO's. Uan gran ventaja que provee el dato IndexedModel, es que sirve como un intermediario para cargar información al GPU, y cualquier módulo que se agregue al proyecto para cargar algún formato de objeto poligonal al sistema, solo debe de implementar un método que convierta la información en un IndexedModel. Para cargar al GPU y dibujar en pantalla un IndexedModel, se usan las funciones implementadas en el modulo \emph{EasyGL.Entity~\ref{EasyGL.Entity}}.
 
-Para cargar la información de los archivos Obj a OpenGL, se implementa el módulo \emph{EasyGL.Obj.Obj2IM~\ref{EasyGL.Obj.Obj2IM}}, que lee el archivo y transforma la información en un IndexedModel.
+Para cargar la información de los archivos Obj a OpenGL, se implementa el módulo \\\emph{EasyGL.Obj.Obj2IM~\ref{EasyGL.Obj.Obj2IM}}, que lee el archivo y transforma la información en un IndexedModel.
 
 %\subsection{Extras}
 

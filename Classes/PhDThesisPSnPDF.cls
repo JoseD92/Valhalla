@@ -811,6 +811,14 @@ wish to left align your text}
 % These macros are used to declare arguments needed for the
 % construction of the title page and other preamble.
 
+% Defining the crest
+\newcommand{\@crest}{}
+\newcommand{\crest}[1]{\renewcommand{\@crest}{#1}}
+
+% The name of your University
+\newcommand{\@university}{}
+\newcommand{\university}[1]{\renewcommand{\@university}{#1}}
+
 % Subtitle (optional)
 \newcommand{\@subtitle}{}
 \newcommand{\subtitle}[1]{\renewcommand{\@subtitle}{#1}}
@@ -830,14 +838,6 @@ wish to left align your text}
 % The name of your college (eg. King's)
 \newcommand{\@college}{}
 \newcommand{\college}[1]{\renewcommand{\@college}{#1}}
-
-% The name of your University
-\newcommand{\@university}{}
-\newcommand{\university}[1]{\renewcommand{\@university}{#1}}
-
-% Defining the crest
-\newcommand{\@crest}{}
-\newcommand{\crest}[1]{\renewcommand{\@crest}{#1}}
 
 % Defining the college crest
 \newif\ifPHD@collegeshield\PHD@collegeshieldfalse
@@ -1257,3 +1257,30 @@ wish to left align your text}
 }
 
 \usepackage{listings}
+
+\usepackage{titlesec}
+
+\titlespacing{\chapter}{0pt}{30mm}{12pt}
+\titleformat{\chapter}[display]
+{\centering\large\bfseries}
+{\MakeUppercase{\chaptertitlename}\ \thechapter}
+{0pt}
+{\normalsize}
+
+\titleformat{\section}
+{\normalfont\bfseries}
+{\thesection. }
+{0pt}
+{\normalsize}
+
+\titleformat{\subsection}
+{\normalfont\bfseries}
+{\thesection. }
+{0pt}
+{\normalsize}
+
+\titleformat{\subsubsection}
+{\normalfont\bfseries}
+{\thesection. }
+{0pt}
+{\normalsize}
