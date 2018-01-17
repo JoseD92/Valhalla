@@ -24,9 +24,9 @@ La lógica del juego a crear debe de ser implementada en algún algoritmo, de fo
 
 Una entidad es un objeto de propósito general, y suele consistir de no más que un identificador único que lo diferencia a la entidad de otras. Los componentes son el conjunto de información requerida para el funcionamiento de un aspecto del objeto y su interacción con el mundo. Finalmente cada sistema corre de manera continua e interactúa con cada entidad de posea el componente correspondiente.
 
-Con el patrón ECS, un ejemplo común de su uso sería un sistema encargado de dibujar en pantalla interactúa con todos las entidades que tenga, por ejemplo, las componentes de visibilidad y física, estos componentes se encargarían de indicar al sistema como y donde dibujar el objeto.
+Un ejemplo común del uso del patrón ECS es el de un sistema encargado de dibujar en pantalla, este interactúa con todos las entidades que tenga, por ejemplo, las componentes de visibilidad y física, estos componentes se encargarían de indicar al sistema cómo y dónde dibujar el objeto.
 
-En los motores de juegos con ECS normalmente se implementa la lógica del juego permitiendo al usuario implementar un componente que será administrado por un sistema que actualizara el componente cada cierto tiempo. En estos sistemas la comunicación entre componentes y sistemas es compleja y varia en varias implementaciones.
+En los motores de juegos con ECS normalmente se implementa la lógica del juego permitiendo al usuario implementar un componente que será administrado por un sistema que actualizará el componente cada cierto tiempo. En estos sistemas la comunicación entre componentes y sistemas es compleja y varia dependiendo de la implementación.
 
 \subsection{Motor gráfico}
 
@@ -36,7 +36,7 @@ En lugar de programarse y compilarse para ejecutarse en la CPU o GPU directament
 
 \subsection{Motor de audio}
 
-El motor de audio es el componente que consiste en algoritmos relacionados con el sonido. Puede calcular cosas en la CPU o en un ASIC dedicado. Las API de abstracción, como OpenAL, audio SDL, XAudio 2, Web Audio, etc. están disponibles y simplifican la implementación de estos sistemas.
+El motor de audio es el componente que consiste en algoritmos relacionados con el sonido. Puede realizar cálculos en la CPU o en un ASIC dedicado. Las API de abstracción, como OpenAL, audio SDL, XAudio 2, Web Audio, etc. están disponibles y simplifican la implementación de estos sistemas.
 
 \subsection{Motor de física}
 
