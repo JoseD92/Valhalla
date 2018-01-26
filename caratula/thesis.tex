@@ -143,10 +143,6 @@ Por:\\
 José Daniel Duran Toro
 
 \vfill
-Realizado con la asesoría de:\\
-Victor Theoktisto
-
-\vfill
 \large PROYECTO DE GRADO\\
 Presentado ante la Ilustre Universidad Simón Bolívar\\
 como requisito parcial para optar al título de\\
@@ -158,109 +154,5 @@ Ingeniero de la Computación
 \end{center}
 
 \end{titlepage}
-
-% *********** To change the name of Table of Contents / LOF and LOT ************
-
-%\renewcommand{\chaptername}{Capítulo}
-%\renewcommand{\contentsname}{Índice de Contenidos}
-%\renewcommand{\listfigurename}{Lista de Figuras}
-%\renewcommand{\listtablename}{Lista de Tablas}
-%% changes the default name `Bibliography` -> `References'
-%\renewcommand{\bibname}{Bibliografía}
-%\renewcommand{\abstractname}{Resumen}
-%\renewcommand{\abstractname}{Resumen}
-%\include{Dedication/dedication}
-%\include{Declaration/declaration}
-%\include{Acknowledgement/acknowledgement}
-\include{caratula/caratula}
-\include{Abstract/abstract}
-
-% *********************** Adding TOC and List of Figures ***********************
-
-\tableofcontents
-
-\listoffigures
-
-\listoftables
-
-% \printnomenclature[space] space can be set as 2em between symbol and description
-%\printnomenclature[3em]
-
-\nomenclature{$ECS$}{Patrón Sistema Entidad Componente}
-\nomenclature{$API$}{Interfaces de programación de aplicación}
-\nomenclature{$GPU$}{Unidad de procesamiento de gráficos.}
-
-\printnomenclature
-
-% ******************************** Main Matter *********************************
-\mainmatter
-
-\include{intro/intro}
-
-\chapter{Marco Teórico}
-\label{capitulo2}
-
-Esta sección muestra los diferentes conceptos y ventajas de diferentes tecnologías. Ya que la creación e videojuegos y sistemas interactivos están actualmente dominados por una metodología imperativa contraria a la programación funcional, este capítulo abarca ambos temas en forma separada para luego establecer conexión en capítulos posteriores.
-
-\input{motorJuego/motorJuego}
-\input{progFun/progFun}
-\input{FRP/FRP}
-\include{metodologia/metodologia}
-\include{implementacion/implementacion}
-\include{resultados/resultados}
-\include{conclusiones/conclusiones}
-
-%\include{code/code}
-%\include{Chapter3/chapter3}
-%\include{Chapter2/chapter2}
-%\include{Chapter4/chapter4}
-%\include{Chapter5/chapter5}
-%\include{Chapter6/chapter6}
-%\include{Chapter7/chapter7}
-
-
-
-% ********************************** Back Matter *******************************
-% Backmatter should be commented out, if you are using appendices after References
-%\backmatter
-
-% ********************************** Bibliography ******************************
-\begin{spacing}{0.9}
-
-% To use the conventional natbib style referencing
-% Bibliography style previews: http://nodonn.tipido.net/bibstyle.php
-% Reference styles: http://sites.stat.psu.edu/~surajit/present/bib.htm
-
-%\bibliographystyle{apalike}
-%\bibliographystyle{unsrt} % Use for unsorted references
-%\bibliographystyle{plainnat} % use this to have URLs listed in References
-\bibliographystyle{IEEEtran}
-\cleardoublepage
-\bibliography{References/references} % Path to your References.bib file
-
-
-% If you would like to use BibLaTeX for your references, pass `custombib' as
-% an option in the document class. The location of 'reference.bib' should be
-% specified in the preamble.tex file in the custombib section.
-% Comment out the lines related to natbib above and uncomment the following line.
-
-%\printbibliography[heading=bibintoc, title={References}]
-
-
-\end{spacing}
-
-% ********************************** Appendices ********************************
-
-\begin{appendices} % Using appendices environment for more functunality
-%\footnotesize
-\include{code/code}
-
-%\include{Appendix1/appendix1}
-%\include{Appendix2/appendix2}
-
-\end{appendices}
-
-% *************************************** Index ********************************
-\printthesisindex % If index is present
 
 \end{document}
