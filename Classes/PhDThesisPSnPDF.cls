@@ -1275,12 +1275,12 @@ wish to left align your text}
 
 \titleformat{\subsection}
 {\normalfont\bfseries}
-{\thesection. }
+{\thesubsection. }
 {0pt}
 {\normalsize}
 
 \titleformat{\subsubsection}
 {\normalfont\bfseries}
-{\thesection. }
+{\thesubsubsection. }
 {0pt}
 {\normalsize}
