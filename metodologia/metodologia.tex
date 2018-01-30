@@ -17,11 +17,28 @@ A fin de mejorar la productividad en el desarrollo y la calidad del motor de jue
 \caption[Metodología de desarrollo por prototipos]{Ciclo de desarrollo de una aplicación mediante la metodología de desarrollo por prototipos.}
 \end{figure}
 
-\section{Requisitos del sistema}
+\section{Requerimientos del sistema}
 
-Ya que el objetivo de este proyecto es la creación de un motor de juego, los requisitos ideales que este debe suplir son los mismos que cualquier otro motor de juego, tener un motor gráfico para dibujar en pantalla, permitir a los programadores implementar la lógica de sus juegos, permitir a los artistas importar recursos al juego, un motor de física que resuelva colisiones entre objetos, entre otras características comunes antes mencionadas.
+Ya que el objetivo de este proyecto es la creación de un motor de juego, este debe, al igual que otros motores de juego, tener un motor gráfico para dibujar en pantalla, permitir a los programadores implementar la lógica de sus juegos, permitir a los artistas importar recursos al juego, un motor de física que resuelva colisiones entre objetos, entre otras características comunes antes mencionadas.
 
 La diferencia que este proyecto debe necesariamente suplir, es funcionar en un lenguaje funcional, permitiendo a los programadores de los juegos trabajar con el mismo, y hacer el mayor uso posible de los beneficios que brinda la programación funcional para hacer que los juegos producidos sean lo más eficientes posible.
+
+El programa final tendrá como usuario tres tipos de actores, que son los artistas, interesados principalmente en poder usar sus creaciones dentro del juego, los programadores, que implementan la lógica del juego usando el motor, y los jugadores, que si bien no interactúan directamente con el motor, lo hacen indirectamente a través de los juegos creados. Véase el diagrama de casos de uso en la \emph{Figura~\ref{fig:MCU}}.
+
+\subsection{Requerimientos funcionales}
+
+\begin{itemize}
+  \item Generar videojuegos funcionales, el motor debe de ofrecer una interfaz mediante la cual los programadores que usen el motor puedan implementar la lógica de sus juegos y el motor debe de encargarse de enlazar los sistemas necesarios para generar un juego funcional.
+  \item Administrar la entrada del videojuego, el motor debe de garantizar que la entrada generada por el jugador pueda ser correctamente procesada.
+  \item Permitir la carga de recursos multimedia al juego, el motor debe de proveer facilidades para ingresar contenido de los artistas dentro del juego.
+\end{itemize}
+
+\subsection{Requerimientos no funcionales}
+
+\begin{itemize}
+  \item Administrar los recursos del dispositivo, el motor debe hacer un uso eficiente de los recursos del dispositivo para proveer una mejor experiencia de juego.
+  \item Concurrencia, el motor debe de poder hacer uso de la concurrencia para ofrecer un mejor desempeño, aprovechando las ventajas de lenguaje Haskell para este fin.
+\end{itemize}
 
 \section{Limitaciones del sistema}
 
@@ -29,21 +46,11 @@ Ya que crear un motor de juego con todas las características que poseen los mot
 
 Las capacidades mínimas elegidas para poder producir juegos son, tener un  motor gráfico, poder cargar recursos para el motor gráfico, en este caso imágenes, shaders y mallados poligonales, y finalmente el motor lógico donde el programador implementará la funcionalidad del juego. Están serán tomadas como los requerimientos  mínimos que el programa final deberá de proveer como motor de juego, y serán usados como guía para la producción de los prototipos durante el desarrollo.
 
-\section{Especificación de requisitos}
-
-El programa final tendrá como usuario tres tipos de actores, que son los artistas, interesados principalmente en poder usar sus creaciones dentro del juego, los programadores, que implementan la lógica del juego usando el motor, y los jugadores, que si bien no interactúan directamente con el motor, lo hacen indirectamente a través de los juegos creados.
-
-El principal caso de uso de los jugadores con el motor es el uso de los juegos, en ese aspecto el motor debe de encargarse de generar juego que transmitan correctamente las intenciones del jugador al sistema del juego. Para este proyecto este caso de uso se limitara a la entrada que el jugador genere vía el teclado, el ratón o modificaciones que este realice a la ventana del juego.
-
-En cuanto a los artistas, el motor solo requiere tener la capacidad de cargar recursos para el motor gráfico.
-
-El actor de mayor importancia para el programa final será el programador, este debe de tener la capacidad de implementar la lógica de su juego usando programación funcional, de preferencia con funciones puras. También se requerirá de un sistema que le permita correr funciones de E/S cuando se le sea necesario sin interferir con el flujo de cómputo de la lógica del juego, de preferencia en forma asíncrona. Finalmente el programador deberá de tener una manera de recibir y hacer cálculos con la entrada recibida del usuario y usar los recursos provistos por los artistas para dibujar en pantalla.
-
-Adicionalmente de cubrir las necesidades de los actores, se espera que el motor haga el mayor uso posible de las facilidades ofrecidas por la programación funcional para hacer los que los juegos creados puedan hacer el mayor uso de los recursos del ordenador, especialmente en temas de paralelismo donde destaca la programación funcional.
-
 \section{Arquitectura}
 
-Los diferentes requerimientos del proyecto serán implementados en forma modular, para permitir que nuevos prototipos solo requieran la modificación de una sección del programa. Como el lenguaje de implementación \emph{Haskell} posee estándares para la construcción de paquetes y librerías \cite{wiki:WriteAHaskellProgram}, estos se utilizaran para la construcción del programa.
+Los diferentes requerimientos del proyecto serán implementados en forma modular, para permitir que nuevos prototipos solo requieran la modificación de una sección del programa. Como el lenguaje de implementación \emph{Haskell} posee estándares para la construcción de paquetes y librerías \cite{wiki:WriteAHaskellProgram}, estos se utilizaran para la construcción de la herramienta.
+
+Los videojuegos creados usaran una arquitectura en pipeline, que consiste en la transformación contínua del flujo de datos (entrada del jugador) en un resultado (gráficos del juego). Este modelo surge naturalmente en la programación funcional por su equivalencia a la composición de funciones y al flujo de trabajo encontrado en las librerías de FRP.
 
 \section{Desarrollo}
 
@@ -51,4 +58,25 @@ Usando la metodología de desarrollo por prototipos, se implementará módulos q
 
 \section{Documentación}
 
-El presente documento servirá como el principal manual para el funcionamiento interno del programa. Para documentación que indique el uso y funcionamiento de las funciones públicas implementadas por el motor, se usara el estándar de comentarios de \emph{Haskell} para generar documentación con el programa Haddock.
+El presente documento servirá como el principal manual para el funcionamiento interno del programa. Para documentación que indique el uso y funcionamiento de las funciones públicas implementadas por el motor, se usara el estándar de comentarios de \emph{Haskell} para generar documentación. Usando el programa ¨stack¨ sera posible generar la documentación en html usando el comando ¨stack haddock¨ en el directorio raíz del código provisto junto a este documento.
+
+\section{Pruebas funcionales}
+
+Para realizar pruebas continuas en cada iteración de la contrucción de la herramienta de crearon cuatro juegos de prueba usando la misma herramienta para prevenir que algún componente se viese afectado en cualquiera de las iteraciones.
+
+\begin{enumerate}
+  \item Programa de prueba 1: juego en que cubos y esferas se mueven sobre un mapa, los objetos iguales rebotan entre sí y los diferentes se eliminan al chocar. Adicionalmente el jugador puede controlar la cámara con el ratón y teclado. Véase \emph{Figura~\ref{fig:test1}}.
+  \item Programa de prueba 2: juego en que una esfera rebota sobre un plano, el jugador puede controlar la cámara con el ratón y teclado. Véase \emph{Figura~\ref{fig:test2}}.
+  \item Programa de prueba 3: juego en que 200 esferas rebotan entre sí. Esta resultó la prueba más importante para medir rendimiento por la cantidad de elementos en escena. Véase \emph{Figura~\ref{fig:test3}}.
+  \item Programa de prueba 4: juego en que un cono persigue a una esfera controlada por el jugador. Adicionalmente el jugador puede controlar la cámara con el ratón y teclado. Véase \emph{Figura~\ref{fig:gameia}}.
+\end{enumerate}
+
+Estos programas de prueba pueden ser compilados y ejecutados corriendo los siguientes comandos desde el directorio raíz del código provisto junto a este documento:
+
+\begin{lstlisting}[frame=single,language=Haskell]
+stack build
+stack exec test1
+stack exec test3
+stack exec test2
+stack exec gameia
+\end{lstlisting}
