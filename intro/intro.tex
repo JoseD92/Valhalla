@@ -5,7 +5,21 @@ La industria moderna de videojuegos maneja algunos de los proyectos más grandes
 
 El presente trabajo propone una alternativa para la producción de videojuegos en la forma de un motor de juego que permita la producción de los mismos en un lenguaje funcional, en este caso el lenguaje \emph{Haskell}, para así poder hacer uso de las ventajas que este tipo de lenguajes, como la facilidad para crear código paralelo y la seguridad de tipos, para proveer así de una mejora en la productividad y calidad de los juegos creados.
 
- Algunas aplicaciones que esta herramienta puede presentar a diversos campos son:
+Conceptualmente, alejarse de un lenguaje imperativo (Java, C\#, C++, etc.) mejorara la capacidad de comprensión del código, ya que la Programación funcional se centra en el problema en sí. Es decir, la programación funcional se centra en qué hacer en lugar de cómo hacerlo. Proporcionando una mejor abstracción para la resolución de problemas. Ello puede sonar como un pequeño beneficio por el esfuerzo que implica cambiar la forma en que abordamos el código, sin embargo, tener una mejor comprensión del código lleva a una gran mejora en la depuración y mantenimiento, traduciéndose en ahorros de tiempo y dinero que podrán afectar el éxito general del proyecto. Hoy en día, varias startups dependen de cuán rápido se puede llegar a una solución de trabajo, qué tan fácil es escalar desde allí y cómo se pueden hacer esas cosas con la menor cantidad de dinero posible.
+
+A través del paradigma de Programación Funcional ganamos elegancia y simplicidad, descomposición más fácil de los problemas y código más estrechamente relacionado con el dominio del problema. Esto también nos conduce a pruebas unitarias simples y directas, depuración más sencilla y concurrencia simple. Además, la adopción inevitable de CPUs con docenas de núcleos, y por lo tanto la creciente importancia de la programación no secuencial, solo acelerará el aumento en la adopción de la Programación Funcional, a medida que los viejos modelos de paralelismo traen complejidad que hace imposible razonar sobre los programas.
+
+En el lenguaje funcional Haskell se ha producido diversos juegos a pequeña escala, e inclusive se ha visto motores de juego simples, como por ejemplo Helm, Bogre-Banana y actionkid, pero ninguno de estos programas explota las capacidades del lenguaje como en el caso del paralelismo y, en el caso de los motores, de la seguridad de tipos que se puede obtener al usar funciones puras.
+
+\section{Planteamiento del problema}
+
+Ya que la industria moderna de videojuegos requiere tiempos de producción cortos y la capacidad de generar programas grandes que se requiere que corran en tiempo real, es necesario el uso de una herramienta que permita reducir los errores en el proceso de producción y que de un acceso más transparente a los recursos del ordenador al mismo tiempo que esta herramienta produce programas eficientes. Por esta razón este proyecto presenta como propuesta la implementación de un motor de juego que haga uso de lenguajes funcionales, en este caso el lenguaje \emph{Haskell}, ya que este lenguaje es conocido por tener la capacidad de detectar muchos errores comunes a tiempo de compilación y producir código eficiente que puede fácilmente ser corrido en forma concurrente.
+
+\section{Justificación e importancia}
+
+Usando el lenguaje \emph{Haskell} como base para la producción de juegos, puede permitir la reducción de los errores del programa gracias a su sistema de tipos estrictos, reduciendo el mantenimiento que el juego pueda requerir después de su lanzamiento inicial para la corrección de errores. \emph{Haskell} también es conocido por generar código que puede ser fácilmente paralelizable lo que puede llevar a un mejor consumo de los recursos del ordenador.
+
+ La aplicación de este proyecto presenta beneficios a diferentes areas:
 
 \begin{itemize}
 \item Industria: un entorno funcional ayudaría a reducir los errores en el código final y reducir el tiempo de producción.
@@ -13,23 +27,17 @@ El presente trabajo propone una alternativa para la producción de videojuegos e
 \item Educación: esta herramienta puede ser usada para la visualización y modelado de simulaciones, debido a su similitud con los videojuegos.
 \end{itemize}
 
-Conceptualmente, alejarse de un lenguaje imperativo (Java, C\#, C++, etc.) mejorara la capacidad de comprensión del código, ya que la Programación funcional se centra en el problema en sí. Es decir, la programación funcional se centra en qué hacer en lugar de cómo hacerlo. Proporcionando una mejor abstracción para la resolución de problemas. Ello puede sonar como un pequeño beneficio por el esfuerzo que implica cambiar la forma en que abordamos el código, sin embargo, tener una mejor comprensión del código lleva a una gran mejora en la depuración y mantenimiento, traduciéndose en ahorros de tiempo y dinero que podrán afectar el éxito general del proyecto. Hoy en día, varias startups dependen de cuán rápido se puede llegar a una solución de trabajo, qué tan fácil es escalar desde allí y cómo se pueden hacer esas cosas con la menor cantidad de dinero posible.
-
-A través del paradigma de Programación Funcional ganamos elegancia y simplicidad, descomposición más fácil de los problemas y código más estrechamente relacionado con el dominio del problema. Esto también nos conduce a pruebas unitarias simples y directas, depuración más sencilla y concurrencia simple. Además, la adopción inevitable de CPUs con docenas de núcleos, y por lo tanto la creciente importancia de la programación no secuencial, solo acelerará el aumento en la adopción de la Programación Funcional, a medida que los viejos modelos de paralelismo traen complejidad que hace imposible razonar sobre los programas.
-
-En el lenguaje funcional Haskell se ha producido diversos juegos a pequeña escala, e inclusive se ha visto motores de juego simples, como por ejemplo Helm, Bogre-Banana y actionkid, pero ninguno de estos programas explota las capacidades del lenguaje como en el caso del paralelismo y, en el caso de los motores, de la seguridad de tipos que se puede obtener al usar funciones puras.
-
 \section{Objetivo general de la investigación}
 
-Crear una herramienta con la cual sea posible facilitar la creación juegos usando el lenguaje funcional Haskell.
+Crear una herramienta que facilite la producción de juegos mediante el uso del lenguaje \emph{Haskell}.
 
 \subsection{Objetivos específicos}
 
 \begin{enumerate}
-  \item Estudiar las estructuras de datos y algoritmos necesarios para crear un motor de juego funcional.
+  \item Estudiar las estructuras de datos y algoritmos necesarios para el funcionamiento de juegos desde el punto de vista de la programación funcional.
   \item Estudiar las diferencias que un motor de juegos funcional presenta ante uno imperativo.
-  \item Crear programas de prueba para verificar la eficacia de la herramienta.
-  \item Crear un sistema que permita a los juegos hechos con la herramienta aprovechar las ventajas de la programación Funcional.
+  \item Crear un sistema que permita a los juegos producidos con la herramienta hacer uso de las ventajas de la programación Funcional.
+  \item Crear programas de prueba usando la herramienta creada que sirvan de prueba de la funcionalidad de la misma.
 \end{enumerate}
 
 \section{Alcance de la investigación}
