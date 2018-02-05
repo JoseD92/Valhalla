@@ -192,17 +192,3 @@ Como cada hilo solo requiere de una referencia a los resultados de los objetos d
 La comunicación entre los diferentes hilos se logra con el uso de \emph{MVar}, que son apuntadores especiales de \emph{Haskell} que tienen la propiedad de funcionar como semáforos, haciendo que los hilos solo puedan enviar información a otros una vez estos estén listos para recibirla. El uso de estas \emph{MVar} causa, en la implementación actual, que todos los hilos se sincronicen al más lento.
 
 El módulo \emph{Val.Strict.Scene~\ref{Val.Strict.Scene}} ademas aprovecha el hecho de que el tipo \emph{IL} implemente la clase \emph{Traversable}, con esta clase se puede usar la librería \emph{Control.Parallel.Strategies} de \emph{Haskell} para que el calculo de los diferentes objetos del juego se realice en forma concurrente manejado por el runtime environment de \emph{Haskell}, permitiendo que los cálculos realizados en el hilo lógico puedan realizare en más de un procesador. Para poder usar esta versión del hilo lógico, el usuario solo debe cambiar la llamada de la función initScene por la función initScenePar implementada en el mismo módulo.
-
-\subsection{Utilidades}
-
-Ya que \emph{FRP} es un concepto complicado (de aprender a usar), puede resultar ser una barrera para usar el motor de juego, por ello se ha creado en el módulo \emph{Val.Strict.Util~\ref{Val.Strict.Util}} la función makeSF que tiene la firma:
-
-\begin{lstlisting}[frame=single,language=Haskell]
-makeSF :: a
-  -> (a -> ObjInput b c -> (a,ObjOutput b c))
-  -> Object b c
-\end{lstlisting}
-
-Con la función makeSF el usuario puede crear un objeto de juego sin usar \emph{FRP} o la librería \emph{Yampa}. Esta función toma como primer argumento un estado inicial y de segundo una función que toma ese estado, una entrada de objeto y retorna el estado actualizado y una salida de objetos.
-
-Sin embargo esta forma de crear objetos de juego carece de la capacidad de cambiar comportamiento a medida que corre el programa que posee \emph{FRP}, un objeto creado con esta función solo podrá tener el comportamiento de la función dada en el segundo argumento. La única manera de cambiar el comportamiento es creando un objeto nuevo y destruir el viejo.
