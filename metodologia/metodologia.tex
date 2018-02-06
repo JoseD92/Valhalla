@@ -58,18 +58,18 @@ La \emph{Figura~\ref{fig:MCU}} muestra el diagrama de casos de uso para la herra
 
 La labor principal del artista es la carga de contenido multimedia al juego, labor que el programador también podrá realizar en caso de ser necesario. Para ello la herramienta ofrecerá la capacidad de cargar elementos en múltiples formatos comunes en varios otros programas de diseño.
 
-El programador por su parte tiene la responsabilidad de diseñar los niveles/mapas del juego haciendo uso del contenido multimedia disponible. También se requiere que este implemente la lógica que todo juego requiera. Finalmente el programador tiene siempre la opción de generar un ejecutable del juego para pruebas o como versión de lanzamiento.
-
-El jugador usar los ejecutables generados por el programador.
-
-Otros requerimientos del sistema como la administración de la entrada y salida del juego serán manejada de forma transparente por la herramienta sin la necesidad de la intervención de los actores.
-
-\begin{figure}[!htbp!]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{MCU}
 \caption[Diagrama de casos de uso]{Diagrama de casos de uso}
 \label{fig:MCU}
 \end{figure}
+
+El programador por su parte tiene la responsabilidad de diseñar los niveles/mapas del juego haciendo uso del contenido multimedia disponible. También se requiere que este implemente la lógica que todo juego requiera. Finalmente el programador tiene siempre la opción de generar un ejecutable del juego para pruebas o como versión de lanzamiento.
+
+El jugador usar los ejecutables generados por el programador.
+
+Otros requerimientos del sistema como la administración de la entrada y salida del juego serán manejada de forma transparente por la herramienta sin la necesidad de la intervención de los actores.
 
 \subsection{Componentes del sistema}
 
@@ -81,15 +81,16 @@ Todo juego creado por la herramienta tendrá dependencias de código como visto 
   \item EasyGL es una librería creada para generar una abstracción en las llamadas de las librerias OpenGL y GLUT, haciendo el uso de estas librerías más fácil en Haskell.
   \item El motor de juego, que se encarga de la administración de las diferentes entidades del juegousando la libreria Yampa, y actualiza los gráficos en pantalla en función del resultado de actualizar las entidades en cada frame.
   \item Yampa, que provee la infraestructura para la programación y actualización de las entidades del juego.
-  \item Finalmente el código del programador proveer el comportamiento específico que cada entidad requiera para la creación del juego.
-\end{itemize}
 
-\begin{figure}[!htbp!]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{componentes}
 \caption[Diagrama de componentes]{Diagrama de componentes}
 \label{fig:componentes}
 \end{figure}
+
+  \item Finalmente el código del programador proveer el comportamiento específico que cada entidad requiera para la creación del juego.
+\end{itemize}
 
 Ya que la herramienta solo genera un ejecutable que corre en forma independiente, un diagrama de despliegue no se muestra en este documento.
 
